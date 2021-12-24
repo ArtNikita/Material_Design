@@ -1,8 +1,10 @@
 package ru.nikitaartamonov.materialdesign.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
 import ru.nikitaartamonov.materialdesign.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +21,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        //todo
+        viewModel.renderImageDataLiveData.observe(this) {
+            renderImageData(it)
+        }
+    }
+
+    private fun renderImageData(imageWrapper: ImageWrapper) {
+        Glide
+            .with(this)
+            .load(imageWrapper.url)
+            .into(binding.dailyImageView)
     }
 }
