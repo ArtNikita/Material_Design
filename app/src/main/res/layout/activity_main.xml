@@ -27,12 +27,33 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/wikipedia_text_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/normal_space"
+                android:hint="@string/wikipedia_edit_text_hint"
+                app:boxCornerRadiusTopStart="@dimen/text_input_layout_corner_radius"
+                app:endIconDrawable="@drawable/ic_wikipedia"
+                app:endIconMode="custom"
+                app:helperText="@string/wikipedia_edit_text_helper_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/daily_image_view">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/wikipedia_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <include
         android:id="@+id/bottom_sheet"
-        layout="@layout/bottom_sheet_daily_image_description"/>
+        layout="@layout/bottom_sheet_daily_image_description" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
