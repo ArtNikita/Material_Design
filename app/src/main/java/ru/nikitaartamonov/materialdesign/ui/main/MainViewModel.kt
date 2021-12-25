@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.nikitaartamonov.materialdesign.data.retrofit.ImageLoaderRetrofit
 import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
+import ru.nikitaartamonov.materialdesign.domain.Event
 import ru.nikitaartamonov.materialdesign.domain.ImageLoader
 
 class MainViewModel : ViewModel() {
@@ -15,6 +16,7 @@ class MainViewModel : ViewModel() {
 
     val renderImageDataLiveData: LiveData<ImageWrapper> = MutableLiveData()
     val bottomSheetStateLiveData: LiveData<Int> = MutableLiveData()
+    val searchInWikiLiveData: LiveData<Event<String>> = MutableLiveData()
 
     fun onViewIsReady() {
         loadImage()
@@ -23,6 +25,12 @@ class MainViewModel : ViewModel() {
 
     fun onBottomSheetStateChanged(newState: Int) {
         bottomSheetCurrentState = newState
+    }
+
+    fun onWikiIconClicked(inputText: String) {
+        val textToSearch = inputText.trim()
+        if (textToSearch.isEmpty()) return
+        searchInWikiLiveData.postValue(Event("https://ru.wikipedia.org/w/index.php?search=$textToSearch"))
     }
 
     private fun loadImage() {

@@ -1,5 +1,7 @@
 package ru.nikitaartamonov.materialdesign.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initBottomSheet()
+        initViews()
         initViewModel()
         viewModel.onViewIsReady()
     }
@@ -32,6 +34,12 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.bottomSheetStateLiveData.observe(this) { currentState ->
             bottomSheetBehavior.state = currentState
+        }
+        viewModel.searchInWikiLiveData.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { stringUrl ->
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(stringUrl))
+                startActivity(browserIntent)
+            }
         }
     }
 
@@ -45,6 +53,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomSheet.imageDescriptionTextView.text = imageWrapper.explanation
     }
 
+    private fun initViews() {
+        initBottomSheet()
+        initWikipediaEditText()
+    }
+
     private fun initBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheetContainer)
         bottomSheetBehavior.addBottomSheetCallback(
@@ -56,5 +69,11 @@ class MainActivity : AppCompatActivity() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
             }
         )
+    }
+
+    private fun initWikipediaEditText() {
+        binding.wikipediaTextInputLayout.setEndIconOnClickListener {
+            viewModel.onWikiIconClicked(binding.wikipediaTextInputEditText.text.toString())
+        }
     }
 }
