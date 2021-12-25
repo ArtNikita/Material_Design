@@ -31,5 +31,7 @@ class MainActivity : AppCompatActivity() {
             .with(this)
             .load(imageWrapper.url)
             .into(binding.dailyImageView)
+        binding.bottomSheet.titleTextView.text = imageWrapper.title
+        binding.bottomSheet.copyrightTextView.text = imageWrapper.copyright
     }
 }

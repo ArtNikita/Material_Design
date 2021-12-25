@@ -30,4 +30,8 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <include
+        android:id="@+id/bottom_sheet"
+        layout="@layout/bottom_sheet_daily_image_description"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
