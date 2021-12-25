@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             .into(binding.dailyImageView)
         binding.bottomSheet.titleTextView.text = imageWrapper.title
         binding.bottomSheet.copyrightTextView.text = imageWrapper.copyright
+        binding.bottomSheet.imageDescriptionTextView.text = imageWrapper.explanation
     }
 
     private fun initBottomSheet() {
