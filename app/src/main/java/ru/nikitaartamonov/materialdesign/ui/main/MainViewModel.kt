@@ -35,9 +35,8 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+}
 
-    private fun <T> LiveData<T>.postValue(value: T) {
-        (this as MutableLiveData<T>).postValue(value)
-    }
-
+private fun <T> LiveData<T>.postValue(value: T) {
+    (this as MutableLiveData<T>).postValue(value)
 }
