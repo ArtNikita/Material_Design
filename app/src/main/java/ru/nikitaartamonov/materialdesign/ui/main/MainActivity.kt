@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     private fun renderImageData(imageWrapper: ImageWrapper) {
         Glide
             .with(this)
-            .load(imageWrapper.url)
+            .load(if (binding.hdQualityChip.isChecked) imageWrapper.hdUrl else imageWrapper.url)
             .into(binding.dailyImageView)
         binding.bottomSheet.titleTextView.text = imageWrapper.title
         binding.bottomSheet.copyrightTextView.text = imageWrapper.copyright
@@ -56,6 +56,11 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         initBottomSheet()
         initWikipediaEditText()
+        initQualityChip()
+    }
+
+    private fun initQualityChip() {
+        binding.hdQualityChip.setOnClickListener { viewModel.qualityChipTouched() }
     }
 
     private fun initBottomSheet() {

@@ -43,6 +43,10 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
+    fun qualityChipTouched() {
+        imageWrapper?.let { renderImageDataLiveData.postValue(it) }
+    }
 }
 
 private fun <T> LiveData<T>.postValue(value: T) {
