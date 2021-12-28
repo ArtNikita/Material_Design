@@ -10,6 +10,7 @@ import ru.nikitaartamonov.materialdesign.domain.Event
 import ru.nikitaartamonov.materialdesign.domain.ImageLoader
 
 class MainViewModel : ViewModel() {
+
     private val imageLoader: ImageLoader = ImageLoaderRetrofit()
     private var imageWrapper: ImageWrapper? = null
     private var bottomSheetCurrentState = BottomSheetBehavior.STATE_COLLAPSED
@@ -29,7 +30,9 @@ class MainViewModel : ViewModel() {
 
     fun onWikiIconClicked(inputText: String) {
         val textToSearch = inputText.trim()
-        if (textToSearch.isEmpty()) return
+        if (textToSearch.isEmpty()) {
+            return
+        }
         searchInWikiLiveData.postValue(Event("https://ru.wikipedia.org/w/index.php?search=$textToSearch"))
     }
 

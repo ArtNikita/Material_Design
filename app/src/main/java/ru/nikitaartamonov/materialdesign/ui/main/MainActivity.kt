@@ -13,6 +13,7 @@ import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
 import ru.nikitaartamonov.materialdesign.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     private val viewModel by viewModels<MainViewModel>()
     private lateinit var binding: ActivityMainBinding
 
@@ -71,7 +72,9 @@ class MainActivity : AppCompatActivity() {
                     viewModel.onBottomSheetStateChanged(newState)
                 }
 
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    //do nothing
+                }
             }
         )
     }

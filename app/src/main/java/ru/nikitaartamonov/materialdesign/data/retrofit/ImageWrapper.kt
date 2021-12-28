@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ImageWrapper(
     @SerializedName("copyright")
-    val copyright : String,
+    val copyright: String,
     @SerializedName("date")
     val date: String,
     @SerializedName("explanation")
