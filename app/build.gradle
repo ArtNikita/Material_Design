@@ -18,8 +18,6 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "NASA_API_KEY", nasaApiKey
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
