@@ -11,44 +11,15 @@ import ru.nikitaartamonov.materialdesign.domain.ImageLoader
 
 class MainViewModel : ViewModel() {
 
-    private val imageLoader: ImageLoader = ImageLoaderRetrofit()
-    private var imageWrapper: ImageWrapper? = null
-    private var bottomSheetCurrentState = BottomSheetBehavior.STATE_COLLAPSED
+    private var viewJustLaunched = true
 
-    val renderImageDataLiveData: LiveData<ImageWrapper> = MutableLiveData()
-    val bottomSheetStateLiveData: LiveData<Int> = MutableLiveData()
-    val searchInWikiLiveData: LiveData<Event<String>> = MutableLiveData()
+    val initStartFragmentLiveData: LiveData<Event<Boolean>> = MutableLiveData()
 
     fun onViewIsReady() {
-        loadImage()
-        bottomSheetStateLiveData.postValue(bottomSheetCurrentState)
-    }
-
-    fun onBottomSheetStateChanged(newState: Int) {
-        bottomSheetCurrentState = newState
-    }
-
-    fun onWikiIconClicked(inputText: String) {
-        val textToSearch = inputText.trim()
-        if (textToSearch.isEmpty()) {
-            return
+        if (viewJustLaunched) {
+            viewJustLaunched = false
+            initStartFragmentLiveData.postValue(Event(true))
         }
-        searchInWikiLiveData.postValue(Event("https://ru.wikipedia.org/w/index.php?search=$textToSearch"))
-    }
-
-    private fun loadImage() {
-        imageLoader.loadImage { loadedImageWrapper ->
-            if (loadedImageWrapper == null) {
-                //todo notify about loading error
-            } else {
-                imageWrapper = loadedImageWrapper
-                renderImageDataLiveData.postValue(loadedImageWrapper)
-            }
-        }
-    }
-
-    fun qualityChipTouched() {
-        imageWrapper?.let { renderImageDataLiveData.postValue(it) }
     }
 }
 
