@@ -19,16 +19,16 @@ class ImageLoaderRetrofit : ImageLoader {
 
     private val api: ImageApi = retrofit.create(ImageApi::class.java)
 
-    override fun loadImage(callback: (ImageWrapper?) -> Unit) {
+    override fun loadImage(callback: (ImageLoader.State) -> Unit) {
         api.getImage(BuildConfig.NASA_API_KEY).enqueue(object : Callback<ImageWrapper> {
             override fun onResponse(call: Call<ImageWrapper>, response: Response<ImageWrapper>) {
-                if (response.isSuccessful) {
-                    callback(response.body())
-                } else callback(null)
+                val body = response.body()
+                if (body == null) {callback(ImageLoader.State.Error(Throwable("Server problem")))}
+                else {callback(ImageLoader.State.Success(body))}
             }
 
             override fun onFailure(call: Call<ImageWrapper>, t: Throwable) {
-                callback(null)
+                callback(ImageLoader.State.Error(t))
             }
         })
     }

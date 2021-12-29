@@ -37,12 +37,15 @@ class DailyImageViewModel : ViewModel() {
     }
 
     private fun loadImage() {
-        imageLoader.loadImage { loadedImageWrapper ->
-            if (loadedImageWrapper == null) {
-                //todo notify about loading error
-            } else {
-                imageWrapper = loadedImageWrapper
-                renderImageDataLiveData.postValue(loadedImageWrapper)
+        imageLoader.loadImage { state ->
+            when (state) {
+                is ImageLoader.State.Error -> {
+                    //todo notify about loading error
+                }
+                is ImageLoader.State.Success -> {
+                    imageWrapper = state.imageWrapper
+                    renderImageDataLiveData.postValue(state.imageWrapper)
+                }
             }
         }
     }
