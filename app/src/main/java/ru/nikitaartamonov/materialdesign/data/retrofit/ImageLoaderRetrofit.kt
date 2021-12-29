@@ -23,8 +23,11 @@ class ImageLoaderRetrofit : ImageLoader {
         api.getImage(BuildConfig.NASA_API_KEY).enqueue(object : Callback<ImageWrapper> {
             override fun onResponse(call: Call<ImageWrapper>, response: Response<ImageWrapper>) {
                 val body = response.body()
-                if (body == null) {callback(ImageLoader.State.Error(Throwable("Server problem")))}
-                else {callback(ImageLoader.State.Success(body))}
+                if (body == null) {
+                    callback(ImageLoader.State.Error(Throwable("Server problem")))
+                } else {
+                    callback(ImageLoader.State.Success(body))
+                }
             }
 
             override fun onFailure(call: Call<ImageWrapper>, t: Throwable) {
