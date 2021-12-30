@@ -4,4 +4,6 @@
     <string name="wikipedia_edit_text_hint">Type your request here</string>
     <string name="wikipedia_edit_text_helper_text">Search in Wikipedia</string>
     <string name="hd">HD</string>
+    <string name="description">Description</string>
+    <string name="settings">Settings</string>
 </resources>

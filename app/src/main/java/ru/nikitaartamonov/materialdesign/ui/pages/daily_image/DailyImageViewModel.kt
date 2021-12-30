@@ -18,6 +18,8 @@ class DailyImageViewModel : ViewModel() {
     val renderImageDataLiveData: LiveData<ImageWrapper> = MutableLiveData()
     val bottomSheetStateLiveData: LiveData<Int> = MutableLiveData()
     val searchInWikiLiveData: LiveData<Event<String>> = MutableLiveData()
+    val openDescriptionLiveData: LiveData<Event<Boolean>> = MutableLiveData()
+    val openSettingsLiveData: LiveData<Event<Boolean>> = MutableLiveData()
 
     fun onViewIsReady() {
         loadImage()
@@ -52,6 +54,14 @@ class DailyImageViewModel : ViewModel() {
 
     fun qualityChipTouched() {
         imageWrapper?.let { renderImageDataLiveData.postValue(it) }
+    }
+
+    fun settingsChipClicked() {
+        openSettingsLiveData.postValue(Event(true))
+    }
+
+    fun descriptionChipClicked() {
+        openDescriptionLiveData.postValue(Event(true))
     }
 }
 

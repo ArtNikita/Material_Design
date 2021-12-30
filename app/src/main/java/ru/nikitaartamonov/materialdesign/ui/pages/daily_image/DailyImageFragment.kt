@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -41,6 +42,20 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
                 startActivity(browserIntent)
             }
         }
+        viewModel.openDescriptionLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { openDescription() }
+        }
+        viewModel.openSettingsLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { openSettings() }
+        }
+    }
+
+    private fun openSettings() {
+        //TODO("Not yet implemented")
+    }
+
+    private fun openDescription() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     private fun renderImageData(imageWrapper: ImageWrapper) {
@@ -57,6 +72,16 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
         initBottomSheet()
         initWikipediaEditText()
         initQualityChip()
+        initDescriptionChip()
+        initSettingsChip()
+    }
+
+    private fun initSettingsChip() {
+        binding.settingsChip.setOnClickListener { viewModel.settingsChipClicked() }
+    }
+
+    private fun initDescriptionChip() {
+        binding.descriptionChip.setOnClickListener { viewModel.descriptionChipClicked() }
     }
 
     private fun initQualityChip() {
