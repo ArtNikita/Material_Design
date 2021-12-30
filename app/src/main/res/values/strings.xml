@@ -6,4 +6,6 @@
     <string name="hd">HD</string>
     <string name="description">Description</string>
     <string name="settings">Settings</string>
+    <string name="police_theme">Police theme</string>
+    <string name="purple_and_yellow_theme">Purlow theme</string>
 </resources>

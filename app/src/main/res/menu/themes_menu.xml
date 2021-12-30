@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/police_theme_menu"
+        android:title="@string/police_theme" />
+
+    <item
+        android:id="@+id/purple_and_yellow_menu"
+        android:title="@string/purple_and_yellow_theme"/>
+</menu>

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.nikitaartamonov.materialdesign.R
 import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
 import ru.nikitaartamonov.materialdesign.databinding.FragmentDailyImageBinding
+import ru.nikitaartamonov.materialdesign.ui.settings.SettingsBottomSheetDialogFragment
 
 class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
 
@@ -51,7 +51,10 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
     }
 
     private fun openSettings() {
-        //TODO("Not yet implemented")
+        SettingsBottomSheetDialogFragment().show(
+            requireActivity().supportFragmentManager,
+            SettingsBottomSheetDialogFragment.TAG
+        )
     }
 
     private fun openDescription() {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.nikitaartamonov.materialdesign.databinding.ActivityMainBinding
+import ru.nikitaartamonov.materialdesign.domain.Themes
 import ru.nikitaartamonov.materialdesign.ui.pages.daily_image.DailyImageFragment
 
 class MainActivity : AppCompatActivity() {
@@ -14,10 +15,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setTheme(getCurrentTheme())
         setContentView(binding.root)
 
         initViewModel()
         viewModel.onViewIsReady()
+    }
+
+    private fun getCurrentTheme(): Int {
+        val currentTheme: String = getPreferences(MODE_PRIVATE).getString(
+            Themes.THEME_KEY,
+            Themes.DEFAULT_THEME.toString()
+        ) ?: Themes.DEFAULT_THEME.toString()
+        return Themes.Entities.valueOf(currentTheme).styleId
     }
 
     private fun initViewModel() {
