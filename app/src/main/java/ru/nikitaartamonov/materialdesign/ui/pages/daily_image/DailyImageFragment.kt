@@ -30,8 +30,8 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
     }
 
     private fun initViewModel() {
-        viewModel.renderImageDataLiveData.observe(viewLifecycleOwner) {
-            renderImageData(it)
+        viewModel.renderImageDataLiveData.observe(viewLifecycleOwner) { imageWrapper ->
+            renderImageData(imageWrapper)
         }
         viewModel.bottomSheetStateLiveData.observe(viewLifecycleOwner) { currentState ->
             bottomSheetBehavior.state = currentState
@@ -108,7 +108,8 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
 
     private fun initWikipediaEditText() {
         binding.wikipediaTextInputLayout.setEndIconOnClickListener {
-            viewModel.onWikiIconClicked(binding.wikipediaTextInputEditText.text.toString())
+            val textToSearch = binding.wikipediaTextInputEditText.text.toString()
+            viewModel.onWikiIconClicked(textToSearch)
         }
     }
 }
