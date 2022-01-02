@@ -54,9 +54,9 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private fun setTheme(theme: Themes.Entities) {
         val currentTheme = sharedPreferences.getString(THEME_KEY, DEFAULT_THEME.toString())
         if (currentTheme == theme.toString()) return
-        sharedPreferences.edit().let {
-            it.putString(THEME_KEY, theme.toString())
-            it.commit()
+        sharedPreferences.edit().let { editor ->
+            editor.putString(THEME_KEY, theme.toString())
+            editor.commit()
         }
         requireActivity().recreate()
     }
