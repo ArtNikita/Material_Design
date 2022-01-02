@@ -62,9 +62,10 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
     }
 
     private fun renderImageData(imageWrapper: ImageWrapper) {
+        val imageUrl = if (binding.hdQualityChip.isChecked) imageWrapper.hdUrl else imageWrapper.url
         Glide
             .with(requireContext())
-            .load(if (binding.hdQualityChip.isChecked) imageWrapper.hdUrl else imageWrapper.url)
+            .load(imageUrl)
             .into(binding.dailyImageView)
         binding.bottomSheet.titleTextView.text = imageWrapper.title
         binding.bottomSheet.copyrightTextView.text = imageWrapper.copyright
