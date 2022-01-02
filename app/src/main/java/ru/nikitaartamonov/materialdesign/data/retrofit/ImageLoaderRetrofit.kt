@@ -12,12 +12,14 @@ private const val BASE_URL = "https://api.nasa.gov/"
 
 class ImageLoaderRetrofit : ImageLoader {
 
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 
-    private val api: ImageApi = retrofit.create(ImageApi::class.java)
+    private val api: ImageApi by lazy { retrofit.create(ImageApi::class.java) }
 
     override fun loadImage(callback: (ImageLoader.State) -> Unit) {
         api.getImage(BuildConfig.NASA_API_KEY).enqueue(object : Callback<ImageWrapper> {
@@ -30,8 +32,8 @@ class ImageLoaderRetrofit : ImageLoader {
                 }
             }
 
-            override fun onFailure(call: Call<ImageWrapper>, t: Throwable) {
-                callback(ImageLoader.State.Error(t))
+            override fun onFailure(call: Call<ImageWrapper>, throwable: Throwable) {
+                callback(ImageLoader.State.Error(throwable))
             }
         })
     }
