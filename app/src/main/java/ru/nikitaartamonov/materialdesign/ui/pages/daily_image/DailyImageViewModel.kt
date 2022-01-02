@@ -36,7 +36,8 @@ class DailyImageViewModel : ViewModel() {
         if (textToSearch.isEmpty()) {
             return
         }
-        searchInWikiLiveData.postValue(Event("https://ru.wikipedia.org/w/index.php?search=$textToSearch"))
+        val event = Event("https://ru.wikipedia.org/w/index.php?search=$textToSearch")
+        searchInWikiLiveData.postValue(event)
     }
 
     private fun loadImage() {
