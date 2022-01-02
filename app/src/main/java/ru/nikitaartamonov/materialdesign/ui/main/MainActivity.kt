@@ -18,8 +18,9 @@ class MainActivity : AppCompatActivity() {
         setTheme(getCurrentTheme())
         setContentView(binding.root)
 
-        initViewModel()
-        viewModel.onViewIsReady()
+        if (savedInstanceState == null) {
+            initStartFragment()
+        }
     }
 
     private fun getCurrentTheme(): Int {
@@ -28,12 +29,6 @@ class MainActivity : AppCompatActivity() {
             Themes.DEFAULT_THEME.toString()
         ) ?: Themes.DEFAULT_THEME.toString()
         return Themes.Entities.valueOf(currentTheme).styleId
-    }
-
-    private fun initViewModel() {
-        viewModel.initStartFragmentLiveData.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { initStartFragment() }
-        }
     }
 
     private fun initStartFragment() {

@@ -7,16 +7,6 @@ import ru.nikitaartamonov.materialdesign.domain.Event
 
 class MainViewModel : ViewModel() {
 
-    private var viewJustLaunched = true
-
-    val initStartFragmentLiveData: LiveData<Event<Boolean>> = MutableLiveData()
-
-    fun onViewIsReady() {
-        if (viewJustLaunched) {
-            viewJustLaunched = false
-            initStartFragmentLiveData.postValue(Event(true))
-        }
-    }
 }
 
 private fun <T> LiveData<T>.postValue(value: T) {
