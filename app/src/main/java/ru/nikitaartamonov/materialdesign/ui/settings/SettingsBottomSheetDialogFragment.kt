@@ -15,8 +15,7 @@ import ru.nikitaartamonov.materialdesign.domain.Themes.Companion.THEME_KEY
 
 class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentSettingsBottomSheetDialogBinding? = null
-    private val binding get() = _binding!!
+    private var binding: FragmentSettingsBottomSheetDialogBinding? = null
 
     private val sharedPreferences: SharedPreferences by lazy {
         requireActivity().getPreferences(MODE_PRIVATE)
@@ -27,8 +26,8 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBottomSheetDialogBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentSettingsBottomSheetDialogBinding.inflate(inflater, container, false)
+        return requireBinding().root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +40,7 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun initThemesNavigationView() {
-        binding.themesNavigationView.setNavigationItemSelectedListener { menuItem ->
+        requireBinding().themesNavigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.police_theme_menu -> {
                     setTheme(Themes.Entities.POLICE)
@@ -66,8 +65,12 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
         requireActivity().recreate()
     }
 
+    private fun requireBinding(): FragmentSettingsBottomSheetDialogBinding {
+        return binding ?: throw java.lang.IllegalStateException("binding is null")
+    }
+
     override fun onDestroy() {
-        _binding = null
+        binding = null
         super.onDestroy()
     }
 
