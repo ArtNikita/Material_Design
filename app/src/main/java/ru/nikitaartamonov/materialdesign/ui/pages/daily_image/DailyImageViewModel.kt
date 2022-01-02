@@ -8,6 +8,7 @@ import ru.nikitaartamonov.materialdesign.data.retrofit.ImageLoaderRetrofit
 import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
 import ru.nikitaartamonov.materialdesign.domain.Event
 import ru.nikitaartamonov.materialdesign.domain.ImageLoader
+import ru.nikitaartamonov.materialdesign.domain.ImageLoadingState
 
 class DailyImageViewModel : ViewModel() {
 
@@ -41,10 +42,10 @@ class DailyImageViewModel : ViewModel() {
     private fun loadImage() {
         imageLoader.loadImage { state ->
             when (state) {
-                is ImageLoader.State.Error -> {
+                is ImageLoadingState.Error -> {
                     //todo notify about loading error
                 }
-                is ImageLoader.State.Success -> {
+                is ImageLoadingState.Success -> {
                     imageWrapper = state.imageWrapper
                     renderImageDataLiveData.postValue(state.imageWrapper)
                 }

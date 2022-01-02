@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.nikitaartamonov.materialdesign.BuildConfig
 import ru.nikitaartamonov.materialdesign.domain.ImageLoader
+import ru.nikitaartamonov.materialdesign.domain.ImageLoadingState
 
 private const val BASE_URL = "https://api.nasa.gov/"
 
@@ -21,19 +22,19 @@ class ImageLoaderRetrofit : ImageLoader {
 
     private val api: ImageApi by lazy { retrofit.create(ImageApi::class.java) }
 
-    override fun loadImage(callback: (ImageLoader.State) -> Unit) {
+    override fun loadImage(callback: (ImageLoadingState) -> Unit) {
         api.getImage(BuildConfig.NASA_API_KEY).enqueue(object : Callback<ImageWrapper> {
             override fun onResponse(call: Call<ImageWrapper>, response: Response<ImageWrapper>) {
                 val body = response.body()
                 if (body == null) {
-                    callback(ImageLoader.State.Error(Throwable("Server problem")))
+                    callback(ImageLoadingState.Error(Throwable("Server problem")))
                 } else {
-                    callback(ImageLoader.State.Success(body))
+                    callback(ImageLoadingState.Success(body))
                 }
             }
 
             override fun onFailure(call: Call<ImageWrapper>, throwable: Throwable) {
-                callback(ImageLoader.State.Error(throwable))
+                callback(ImageLoadingState.Error(throwable))
             }
         })
     }
