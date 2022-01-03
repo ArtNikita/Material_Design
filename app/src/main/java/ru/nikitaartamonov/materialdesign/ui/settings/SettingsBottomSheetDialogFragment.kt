@@ -69,8 +69,4 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
         binding = null
         super.onDestroy()
     }
-
-    companion object {
-        const val TAG = "SettingsBottomSheetDialogFragment"
-    }
 }

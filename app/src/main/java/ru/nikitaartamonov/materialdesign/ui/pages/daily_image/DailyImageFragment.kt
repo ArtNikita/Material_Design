@@ -53,7 +53,7 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
     private fun openSettings() {
         SettingsBottomSheetDialogFragment().show(
             requireActivity().supportFragmentManager,
-            SettingsBottomSheetDialogFragment.TAG
+            SettingsBottomSheetDialogFragment::class.java.simpleName
         )
     }
 
