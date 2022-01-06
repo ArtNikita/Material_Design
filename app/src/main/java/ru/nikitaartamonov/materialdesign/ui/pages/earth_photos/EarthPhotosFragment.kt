@@ -32,5 +32,6 @@ class EarthPhotosFragment : Fragment(R.layout.fragment_earth_photos) {
         val viewPagerAdapter = EarthPhotosViewPagerAdapter(this)
         viewPagerAdapter.items = earthPhotos
         binding.earthPhotosViewPager.adapter = viewPagerAdapter
+        binding.earthPhotosViewPagerCircleIndicator.setViewPager(binding.earthPhotosViewPager)
     }
 }
