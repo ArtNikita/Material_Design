@@ -16,6 +16,11 @@ class EarthPhotosFragment : Fragment(R.layout.fragment_earth_photos) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewPager()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.onViewIsReady()
     }
 
     private fun initViewPager() {

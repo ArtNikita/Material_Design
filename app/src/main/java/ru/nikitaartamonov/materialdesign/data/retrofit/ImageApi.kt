@@ -8,4 +8,7 @@ interface ImageApi {
 
     @GET("planetary/apod")
     fun getImage(@Query("api_key") key: String): Call<ImageWrapper>
+
+    @GET("EPIC/api/natural/images")
+    fun loadEarthPhotos(@Query("api_key") key: String): Call<List<EarthPhotoWrapper>>
 }
