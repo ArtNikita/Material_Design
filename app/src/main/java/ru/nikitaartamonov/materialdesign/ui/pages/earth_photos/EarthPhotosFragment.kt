@@ -33,5 +33,6 @@ class EarthPhotosFragment : Fragment(R.layout.fragment_earth_photos) {
         viewPagerAdapter.items = earthPhotos
         binding.earthPhotosViewPager.adapter = viewPagerAdapter
         binding.earthPhotosViewPagerCircleIndicator.setViewPager(binding.earthPhotosViewPager)
+        binding.earthPhotosViewPager.offscreenPageLimit = 2
     }
 }

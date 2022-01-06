@@ -9,6 +9,7 @@ import ru.nikitaartamonov.materialdesign.domain.Screens
 import ru.nikitaartamonov.materialdesign.domain.Themes
 import ru.nikitaartamonov.materialdesign.ui.pages.daily_image.DailyImageFragment
 import ru.nikitaartamonov.materialdesign.ui.pages.earth_photos.EarthPhotosFragment
+import ru.nikitaartamonov.materialdesign.ui.pages.weather.WeatherFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,8 +46,7 @@ class MainActivity : AppCompatActivity() {
                 EarthPhotosFragment()
             }
             Screens.WEATHER -> {
-                //todo
-                DailyImageFragment()
+                WeatherFragment()
             }
         }
         supportFragmentManager
