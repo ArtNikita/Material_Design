@@ -25,7 +25,11 @@ class DailyImageViewModel : ViewModel() {
 
     fun onViewIsReady(app: Application) {
         imageLoader = (app as App).imageLoader
-        loadImage()
+        if (imageWrapper == null) {
+            loadImage()
+        } else {
+            imageWrapper?.apply { renderImageDataLiveData.postValue(this) }
+        }
         bottomSheetStateLiveData.postValue(bottomSheetCurrentState)
     }
 
