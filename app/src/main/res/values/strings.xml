@@ -11,4 +11,5 @@
     <string name="daily_image">Daily image</string>
     <string name="earth_photos">Earth photos</string>
     <string name="weather_info">Weather info</string>
+    <string name="earth_image">Earth image</string>
 </resources>
