@@ -7,12 +7,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.nikitaartamonov.materialdesign.BuildConfig
 import ru.nikitaartamonov.materialdesign.domain.EarthPhotosLoadingState
-import ru.nikitaartamonov.materialdesign.domain.ImageLoader
+import ru.nikitaartamonov.materialdesign.domain.GstDataLoadingState
+import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
 import ru.nikitaartamonov.materialdesign.domain.ImageLoadingState
+import java.time.LocalDateTime
 
 private const val BASE_URL = "https://api.nasa.gov/"
 
-class ImageLoaderRetrofit : ImageLoader {
+class NasaDataLoaderRetrofit : NasaDataLoader {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
@@ -57,6 +59,31 @@ class ImageLoaderRetrofit : ImageLoader {
 
                 override fun onFailure(call: Call<List<EarthPhotoWrapper>>, throwable: Throwable) {
                     callback(EarthPhotosLoadingState.Error(throwable))
+                }
+            })
+    }
+
+    override fun loadGstData(callback: (GstDataLoadingState) -> Unit) {
+        val endDate = LocalDateTime.now().toString().substring(0, 10)
+        val endYear = endDate.substring(0, 4).toInt()
+        val startYear = endYear - 1
+        val startDate = "$startYear${endDate.substring(4)}"
+        api.loadGstInfo(startDate, endDate, BuildConfig.NASA_API_KEY)
+            .enqueue(object : Callback<List<GstWrapper>>{
+                override fun onResponse(
+                    call: Call<List<GstWrapper>>,
+                    response: Response<List<GstWrapper>>
+                ) {
+                    val body = response.body()
+                    if (body == null) {
+                        callback(GstDataLoadingState.Error(Throwable("Server problem")))
+                    } else {
+                        callback(GstDataLoadingState.Success(body))
+                    }
+                }
+
+                override fun onFailure(call: Call<List<GstWrapper>>, throwable: Throwable) {
+                    callback(GstDataLoadingState.Error(throwable))
                 }
             })
     }

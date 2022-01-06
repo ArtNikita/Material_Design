@@ -8,12 +8,12 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.nikitaartamonov.materialdesign.app.App
 import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
 import ru.nikitaartamonov.materialdesign.domain.Event
-import ru.nikitaartamonov.materialdesign.domain.ImageLoader
+import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
 import ru.nikitaartamonov.materialdesign.domain.ImageLoadingState
 
 class DailyImageViewModel : ViewModel() {
 
-    private lateinit var imageLoader: ImageLoader
+    private lateinit var nasaDataLoader: NasaDataLoader
     private var imageWrapper: ImageWrapper? = null
     private var bottomSheetCurrentState = BottomSheetBehavior.STATE_COLLAPSED
 
@@ -24,7 +24,7 @@ class DailyImageViewModel : ViewModel() {
     val openSettingsLiveData: LiveData<Event<Boolean>> = MutableLiveData()
 
     fun onViewIsReady(app: Application) {
-        imageLoader = (app as App).imageLoader
+        nasaDataLoader = (app as App).nasaDataLoader
         if (imageWrapper == null) {
             loadImage()
         } else {
@@ -47,7 +47,7 @@ class DailyImageViewModel : ViewModel() {
     }
 
     private fun loadImage() {
-        imageLoader.loadImage { state ->
+        nasaDataLoader.loadImage { state ->
             when (state) {
                 is ImageLoadingState.Error -> {
                     //todo notify about loading error

@@ -1,10 +1,10 @@
 package ru.nikitaartamonov.materialdesign.app
 
 import android.app.Application
-import ru.nikitaartamonov.materialdesign.data.retrofit.ImageLoaderRetrofit
-import ru.nikitaartamonov.materialdesign.domain.ImageLoader
+import ru.nikitaartamonov.materialdesign.data.retrofit.NasaDataLoaderRetrofit
+import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
 
 class App : Application() {
 
-    val imageLoader: ImageLoader by lazy { ImageLoaderRetrofit() }
+    val nasaDataLoader: NasaDataLoader by lazy { NasaDataLoaderRetrofit() }
 }

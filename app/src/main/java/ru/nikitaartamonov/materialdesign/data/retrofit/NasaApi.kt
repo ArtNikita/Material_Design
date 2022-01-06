@@ -11,4 +11,11 @@ interface NasaApi {
 
     @GET("EPIC/api/natural/images")
     fun loadEarthPhotos(@Query("api_key") key: String): Call<List<EarthPhotoWrapper>>
+
+    @GET("DONKI/GST")
+    fun loadGstInfo(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String,
+        @Query("api_key") key: String
+    ): Call<List<GstWrapper>>
 }

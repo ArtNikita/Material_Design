@@ -8,17 +8,17 @@ import ru.nikitaartamonov.materialdesign.app.App
 import ru.nikitaartamonov.materialdesign.data.retrofit.EarthPhotoWrapper
 import ru.nikitaartamonov.materialdesign.domain.EarthPhotosLoadingState
 import ru.nikitaartamonov.materialdesign.domain.Event
-import ru.nikitaartamonov.materialdesign.domain.ImageLoader
+import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
 
 class EarthPhotosViewModel : ViewModel() {
 
-    private lateinit var imageLoader: ImageLoader
+    private lateinit var nasaDataLoader: NasaDataLoader
     private var earthPhotos: List<EarthPhotoWrapper>? = null
 
     val initViewPagerLiveData: LiveData<Event<List<EarthPhotoWrapper>>> = MutableLiveData()
 
     fun onViewIsReady(app: Application) {
-        imageLoader = (app as App).imageLoader
+        nasaDataLoader = (app as App).nasaDataLoader
         if (earthPhotos == null) {
             loadPhotos()
         } else {
@@ -27,7 +27,7 @@ class EarthPhotosViewModel : ViewModel() {
     }
 
     private fun loadPhotos() {
-        imageLoader.loadEarthPhotos { state ->
+        nasaDataLoader.loadEarthPhotos { state ->
             when (state) {
                 is EarthPhotosLoadingState.Success -> {
                     initViewPagerLiveData.postValue(Event(state.earthImages))
