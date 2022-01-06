@@ -8,6 +8,7 @@ import ru.nikitaartamonov.materialdesign.databinding.ActivityMainBinding
 import ru.nikitaartamonov.materialdesign.domain.Screens
 import ru.nikitaartamonov.materialdesign.domain.Themes
 import ru.nikitaartamonov.materialdesign.ui.pages.daily_image.DailyImageFragment
+import ru.nikitaartamonov.materialdesign.ui.pages.earth_photos.EarthPhotosFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,8 +42,7 @@ class MainActivity : AppCompatActivity() {
                 DailyImageFragment()
             }
             Screens.EARTH_PHOTOS -> {
-                //todo
-                DailyImageFragment()
+                EarthPhotosFragment()
             }
             Screens.WEATHER -> {
                 //todo
