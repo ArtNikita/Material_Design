@@ -1,10 +1,11 @@
 package ru.nikitaartamonov.materialdesign.ui.pages.daily_image
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import ru.nikitaartamonov.materialdesign.data.retrofit.ImageLoaderRetrofit
+import ru.nikitaartamonov.materialdesign.app.App
 import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
 import ru.nikitaartamonov.materialdesign.domain.Event
 import ru.nikitaartamonov.materialdesign.domain.ImageLoader
@@ -12,7 +13,7 @@ import ru.nikitaartamonov.materialdesign.domain.ImageLoadingState
 
 class DailyImageViewModel : ViewModel() {
 
-    private val imageLoader: ImageLoader = ImageLoaderRetrofit()
+    private lateinit var imageLoader: ImageLoader
     private var imageWrapper: ImageWrapper? = null
     private var bottomSheetCurrentState = BottomSheetBehavior.STATE_COLLAPSED
 
@@ -22,7 +23,8 @@ class DailyImageViewModel : ViewModel() {
     val openDescriptionLiveData: LiveData<Event<Boolean>> = MutableLiveData()
     val openSettingsLiveData: LiveData<Event<Boolean>> = MutableLiveData()
 
-    fun onViewIsReady() {
+    fun onViewIsReady(app: Application) {
+        imageLoader = (app as App).imageLoader
         loadImage()
         bottomSheetStateLiveData.postValue(bottomSheetCurrentState)
     }

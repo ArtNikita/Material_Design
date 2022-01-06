@@ -26,7 +26,7 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initViewModel()
-        viewModel.onViewIsReady()
+        viewModel.onViewIsReady(requireActivity().application)
     }
 
     private fun initViewModel() {

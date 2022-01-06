@@ -17,10 +17,11 @@ class EarthPhotosFragment : Fragment(R.layout.fragment_earth_photos) {
         super.onViewCreated(view, savedInstanceState)
         initViewPager()
         initViewModel()
+        viewModel.onViewIsReady(requireActivity().application)
     }
 
     private fun initViewModel() {
-        viewModel.onViewIsReady()
+        //todo
     }
 
     private fun initViewPager() {
