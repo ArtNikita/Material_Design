@@ -12,4 +12,5 @@
     <string name="earth_photos">Earth photos</string>
     <string name="weather_info">Weather info</string>
     <string name="earth_image">Earth image</string>
+    <string name="gst_list_description">Geomagnetic Storms (GST) for the last year:</string>
 </resources>
