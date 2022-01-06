@@ -21,10 +21,10 @@ class ImageLoaderRetrofit : ImageLoader {
             .build()
     }
 
-    private val api: ImageApi by lazy { retrofit.create(ImageApi::class.java) }
+    private val api: NasaApi by lazy { retrofit.create(NasaApi::class.java) }
 
     override fun loadImage(callback: (ImageLoadingState) -> Unit) {
-        api.getImage(BuildConfig.NASA_API_KEY).enqueue(object : Callback<ImageWrapper> {
+        api.getDailyImage(BuildConfig.NASA_API_KEY).enqueue(object : Callback<ImageWrapper> {
             override fun onResponse(call: Call<ImageWrapper>, response: Response<ImageWrapper>) {
                 val body = response.body()
                 if (body == null) {

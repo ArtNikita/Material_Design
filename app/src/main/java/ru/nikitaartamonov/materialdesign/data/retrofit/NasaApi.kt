@@ -4,10 +4,10 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ImageApi {
+interface NasaApi {
 
     @GET("planetary/apod")
-    fun getImage(@Query("api_key") key: String): Call<ImageWrapper>
+    fun getDailyImage(@Query("api_key") key: String): Call<ImageWrapper>
 
     @GET("EPIC/api/natural/images")
     fun loadEarthPhotos(@Query("api_key") key: String): Call<List<EarthPhotoWrapper>>
