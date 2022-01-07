@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import ru.nikitaartamonov.materialdesign.app.app
 import ru.nikitaartamonov.materialdesign.databinding.ActivityMainBinding
 import ru.nikitaartamonov.materialdesign.domain.Screens
 import ru.nikitaartamonov.materialdesign.domain.Themes
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setTheme(getCurrentTheme())
+        setTheme(app().getCurrentTheme())
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
@@ -63,13 +64,5 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemReselectedListener { menuItem ->
             viewModel.bottomNavigationViewItemReselected(menuItem)
         }
-    }
-
-    private fun getCurrentTheme(): Int {
-        val currentTheme: String = getPreferences(MODE_PRIVATE).getString(
-            Themes.THEME_KEY,
-            Themes.DEFAULT_THEME.toString()
-        ) ?: Themes.DEFAULT_THEME.toString()
-        return Themes.Entities.valueOf(currentTheme).styleId
     }
 }

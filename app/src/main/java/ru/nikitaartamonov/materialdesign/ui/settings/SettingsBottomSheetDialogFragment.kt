@@ -18,7 +18,7 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private var binding: FragmentSettingsBottomSheetDialogBinding? = null
 
     private val sharedPreferences: SharedPreferences by lazy {
-        requireActivity().getPreferences(MODE_PRIVATE)
+        requireActivity().getSharedPreferences(Themes.THEMES_PREF_NAME, MODE_PRIVATE)
     }
 
     override fun onCreateView(

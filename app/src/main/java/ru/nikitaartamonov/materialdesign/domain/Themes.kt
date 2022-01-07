@@ -12,5 +12,6 @@ class Themes {
     companion object {
         const val THEME_KEY = "THEME_KEY"
         val DEFAULT_THEME = Entities.POLICE
+        const val THEMES_PREF_NAME = "THEMES_PREF_NAME"
     }
 }
