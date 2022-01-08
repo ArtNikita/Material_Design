@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.nikitaartamonov.materialdesign.R
+import ru.nikitaartamonov.materialdesign.app.app
 import ru.nikitaartamonov.materialdesign.databinding.FragmentSettingsBottomSheetDialogBinding
 import ru.nikitaartamonov.materialdesign.domain.Themes
-import ru.nikitaartamonov.materialdesign.domain.Themes.Companion.DEFAULT_THEME
-import ru.nikitaartamonov.materialdesign.domain.Themes.Companion.THEME_KEY
 
 class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
@@ -52,17 +51,12 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun setTheme(theme: Themes.Entities) {
-        val currentTheme = sharedPreferences.getString(THEME_KEY, DEFAULT_THEME.toString())
-        if (currentTheme == theme.toString()) return
-        sharedPreferences.edit().let { editor ->
-            editor.putString(THEME_KEY, theme.toString())
-            editor.commit()
-        }
-        requireActivity().recreate()
+        val currentActivity = requireActivity()
+        currentActivity.app().setTheme(theme, currentActivity)
     }
 
     private fun requireBinding(): FragmentSettingsBottomSheetDialogBinding {
-        return binding ?: throw java.lang.IllegalStateException("binding is null")
+        return binding ?: throw IllegalStateException("binding is null")
     }
 
     override fun onDestroy() {
