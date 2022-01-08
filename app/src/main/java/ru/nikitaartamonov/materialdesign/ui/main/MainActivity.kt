@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import ru.nikitaartamonov.materialdesign.app.app
 import ru.nikitaartamonov.materialdesign.databinding.ActivityMainBinding
 import ru.nikitaartamonov.materialdesign.domain.Screens
-import ru.nikitaartamonov.materialdesign.domain.Themes
 import ru.nikitaartamonov.materialdesign.ui.pages.daily_image.DailyImageFragment
 import ru.nikitaartamonov.materialdesign.ui.pages.earth_photos.EarthPhotosFragment
 import ru.nikitaartamonov.materialdesign.ui.pages.weather.WeatherFragment
+import ru.nikitaartamonov.materialdesign.utils.Themes
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setTheme(app().getCurrentTheme())
+        setTheme(Themes.getCurrentTheme(this))
         setContentView(binding.root)
 
         if (savedInstanceState == null) {

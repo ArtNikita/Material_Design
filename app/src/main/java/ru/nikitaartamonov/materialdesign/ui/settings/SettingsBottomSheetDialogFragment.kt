@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.nikitaartamonov.materialdesign.R
-import ru.nikitaartamonov.materialdesign.app.app
 import ru.nikitaartamonov.materialdesign.databinding.FragmentSettingsBottomSheetDialogBinding
-import ru.nikitaartamonov.materialdesign.domain.Themes
+import ru.nikitaartamonov.materialdesign.utils.Themes
 
 class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
@@ -45,8 +44,7 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun setTheme(theme: Themes.Entities) {
-        val currentActivity = requireActivity()
-        currentActivity.app().setTheme(theme, currentActivity)
+        Themes.setTheme(theme, requireActivity())
     }
 
     private fun requireBinding(): FragmentSettingsBottomSheetDialogBinding {
