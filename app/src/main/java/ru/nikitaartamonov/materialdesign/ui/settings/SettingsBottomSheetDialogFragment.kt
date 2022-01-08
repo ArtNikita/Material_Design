@@ -1,7 +1,5 @@
 package ru.nikitaartamonov.materialdesign.ui.settings
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +13,6 @@ import ru.nikitaartamonov.materialdesign.domain.Themes
 class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentSettingsBottomSheetDialogBinding? = null
-
-    private val sharedPreferences: SharedPreferences by lazy {
-        requireActivity().getSharedPreferences(Themes.THEMES_PREF_NAME, MODE_PRIVATE)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
