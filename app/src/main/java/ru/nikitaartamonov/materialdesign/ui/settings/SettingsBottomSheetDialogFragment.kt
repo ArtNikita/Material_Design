@@ -31,11 +31,11 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
         requireBinding().themesNavigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.police_theme_menu -> {
-                    setTheme(Themes.Entities.POLICE)
+                    setTheme(Themes.POLICE)
                     true
                 }
                 R.id.purple_and_yellow_menu -> {
-                    setTheme(Themes.Entities.PURPLE_AND_YELLOW)
+                    setTheme(Themes.PURPLE_AND_YELLOW)
                     true
                 }
                 else -> throw IllegalStateException("No such menu")
@@ -43,7 +43,7 @@ class SettingsBottomSheetDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setTheme(theme: Themes.Entities) {
+    private fun setTheme(theme: Themes) {
         Themes.setTheme(theme, requireActivity())
     }
 
