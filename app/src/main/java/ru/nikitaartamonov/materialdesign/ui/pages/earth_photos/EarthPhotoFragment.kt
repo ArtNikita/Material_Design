@@ -18,7 +18,8 @@ class EarthPhotoFragment : Fragment(R.layout.fragment_earth_photo) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { args ->
-            val imageLinkPart = args.getString(IMAGE_LINK_PART_KEY) ?: ""
+            val imageLinkPart = args.getString(IMAGE_LINK_PART_KEY)
+                ?: throw IllegalStateException("Image link should be provided")
             val date = args.getString(DATE_KEY)
             setImage(imageLinkPart)
             binding.earthPhotoDateTextView.text = date
