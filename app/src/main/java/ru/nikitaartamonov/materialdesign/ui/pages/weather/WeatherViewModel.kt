@@ -18,10 +18,11 @@ class WeatherViewModel : ViewModel() {
 
     fun onViewCreated(application: Application) {
         nasaDataLoader = (application as App).nasaDataLoader
-        if (gstData == null) {
+        val currentGstData = gstData
+        if (currentGstData == null) {
             loadGstData()
         } else {
-            gstData?.let { setGstDataLiveData.postValue(generateGstListString(it)) }
+            setGstDataLiveData.postValue(generateGstListString(currentGstData))
         }
     }
 
