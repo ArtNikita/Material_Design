@@ -94,17 +94,16 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
 
     private fun initBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheetContainer)
-        bottomSheetBehavior.addBottomSheetCallback(
-            object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    viewModel.onBottomSheetStateChanged(newState)
-                }
-
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    //do nothing
-                }
+        val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                viewModel.onBottomSheetStateChanged(newState)
             }
-        )
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                //do nothing
+            }
+        }
+        bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
     }
 
     private fun initWikipediaEditText() {

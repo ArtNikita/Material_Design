@@ -8,8 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.nikitaartamonov.materialdesign.BuildConfig
 import ru.nikitaartamonov.materialdesign.domain.EarthPhotosLoadingState
 import ru.nikitaartamonov.materialdesign.domain.GstDataLoadingState
-import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
 import ru.nikitaartamonov.materialdesign.domain.ImageLoadingState
+import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
 import java.time.LocalDateTime
 
 private const val BASE_URL = "https://api.nasa.gov/"
@@ -26,7 +26,7 @@ class NasaDataLoaderRetrofit : NasaDataLoader {
     private val api: NasaApi by lazy { retrofit.create(NasaApi::class.java) }
 
     override fun loadImage(callback: (ImageLoadingState) -> Unit) {
-        api.getDailyImage(BuildConfig.NASA_API_KEY).enqueue(object : Callback<ImageWrapper> {
+        val enqueueCallback = object : Callback<ImageWrapper> {
             override fun onResponse(call: Call<ImageWrapper>, response: Response<ImageWrapper>) {
                 val body = response.body()
                 if (body == null) {
@@ -39,28 +39,29 @@ class NasaDataLoaderRetrofit : NasaDataLoader {
             override fun onFailure(call: Call<ImageWrapper>, throwable: Throwable) {
                 callback(ImageLoadingState.Error(throwable))
             }
-        })
+        }
+        api.getDailyImage(BuildConfig.NASA_API_KEY).enqueue(enqueueCallback)
     }
 
     override fun loadEarthPhotos(callback: (EarthPhotosLoadingState) -> Unit) {
-        api.loadEarthPhotos(BuildConfig.NASA_API_KEY)
-            .enqueue(object : Callback<List<EarthPhotoWrapper>> {
-                override fun onResponse(
-                    call: Call<List<EarthPhotoWrapper>>,
-                    response: Response<List<EarthPhotoWrapper>>
-                ) {
-                    val body = response.body()
-                    if (body == null) {
-                        callback(EarthPhotosLoadingState.Error(Throwable("Server problem")))
-                    } else {
-                        callback(EarthPhotosLoadingState.Success(body))
-                    }
+        val enqueueCallback = object : Callback<List<EarthPhotoWrapper>> {
+            override fun onResponse(
+                call: Call<List<EarthPhotoWrapper>>,
+                response: Response<List<EarthPhotoWrapper>>
+            ) {
+                val body = response.body()
+                if (body == null) {
+                    callback(EarthPhotosLoadingState.Error(Throwable("Server problem")))
+                } else {
+                    callback(EarthPhotosLoadingState.Success(body))
                 }
+            }
 
-                override fun onFailure(call: Call<List<EarthPhotoWrapper>>, throwable: Throwable) {
-                    callback(EarthPhotosLoadingState.Error(throwable))
-                }
-            })
+            override fun onFailure(call: Call<List<EarthPhotoWrapper>>, throwable: Throwable) {
+                callback(EarthPhotosLoadingState.Error(throwable))
+            }
+        }
+        api.loadEarthPhotos(BuildConfig.NASA_API_KEY).enqueue(enqueueCallback)
     }
 
     override fun loadGstData(callback: (GstDataLoadingState) -> Unit) {
@@ -68,24 +69,25 @@ class NasaDataLoaderRetrofit : NasaDataLoader {
         val endYear = endDate.substring(0, 4).toInt()
         val startYear = endYear - 1
         val startDate = "$startYear${endDate.substring(4)}"
-        api.loadGstInfo(startDate, endDate, BuildConfig.NASA_API_KEY)
-            .enqueue(object : Callback<List<GstWrapper>>{
-                override fun onResponse(
-                    call: Call<List<GstWrapper>>,
-                    response: Response<List<GstWrapper>>
-                ) {
-                    val body = response.body()
-                    if (body == null) {
-                        callback(GstDataLoadingState.Error(Throwable("Server problem")))
-                    } else {
-                        callback(GstDataLoadingState.Success(body))
-                    }
-                }
 
-                override fun onFailure(call: Call<List<GstWrapper>>, throwable: Throwable) {
-                    callback(GstDataLoadingState.Error(throwable))
+        val enqueueCallback = object : Callback<List<GstWrapper>> {
+            override fun onResponse(
+                call: Call<List<GstWrapper>>,
+                response: Response<List<GstWrapper>>
+            ) {
+                val body = response.body()
+                if (body == null) {
+                    callback(GstDataLoadingState.Error(Throwable("Server problem")))
+                } else {
+                    callback(GstDataLoadingState.Success(body))
                 }
-            })
+            }
+
+            override fun onFailure(call: Call<List<GstWrapper>>, throwable: Throwable) {
+                callback(GstDataLoadingState.Error(throwable))
+            }
+        }
+        api.loadGstInfo(startDate, endDate, BuildConfig.NASA_API_KEY).enqueue(enqueueCallback)
     }
 
 }
