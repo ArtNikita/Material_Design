@@ -13,6 +13,7 @@ class EarthPhotosViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fra
     }
 
     override fun createFragment(position: Int): Fragment {
-        return EarthPhotoFragment.newInstance(items[position].image, items[position].date)
+        val item = items[position]
+        return EarthPhotoFragment.newInstance(item.image, item.date)
     }
 }
