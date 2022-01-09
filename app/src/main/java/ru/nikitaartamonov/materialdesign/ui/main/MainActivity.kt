@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
-            openScreen()
+            openScreen(Screens.DAILY_IMAGE)
         }
         initViewModel()
         initBottomNavigationView()
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openScreen(screen: Screens = Screens.DAILY_IMAGE) {
+    private fun openScreen(screen: Screens) {
         val fragmentToOpen: Fragment = when (screen) {
             Screens.DAILY_IMAGE -> {
                 DailyImageFragment()
