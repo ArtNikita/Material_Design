@@ -3,18 +3,15 @@ package ru.nikitaartamonov.materialdesign.utils
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import ru.nikitaartamonov.materialdesign.R
+import ru.nikitaartamonov.materialdesign.domain.Themes
 
-enum class Themes(val styleId: Int) {
+private const val THEMES_PREF_NAME = "THEMES_PREF_NAME"
+private const val THEME_KEY = "THEME_KEY"
+private val DEFAULT_THEME = Themes.POLICE
 
-    POLICE(R.style.Theme_Police),
-    PURPLE_AND_YELLOW(R.style.Theme_PurpleAndYellow);
+class ThemePreferences {
 
     companion object {
-        private const val THEME_KEY = "THEME_KEY"
-        private val DEFAULT_THEME = POLICE
-        private const val THEMES_PREF_NAME = "THEMES_PREF_NAME"
-
         fun getCurrentTheme(context: Context): Int {
             val sharedPreferences = context.getSharedPreferences(
                 THEMES_PREF_NAME,
@@ -25,7 +22,7 @@ enum class Themes(val styleId: Int) {
                     THEME_KEY,
                     DEFAULT_THEME.toString()
                 ) ?: DEFAULT_THEME.toString()
-            return valueOf(currentTheme).styleId
+            return Themes.valueOf(currentTheme).styleId
         }
 
         fun setTheme(theme: Themes, currentActivity: Activity) {

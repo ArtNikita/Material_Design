@@ -9,7 +9,7 @@ import ru.nikitaartamonov.materialdesign.domain.Screens
 import ru.nikitaartamonov.materialdesign.ui.pages.daily_image.DailyImageFragment
 import ru.nikitaartamonov.materialdesign.ui.pages.earth_photos.EarthPhotosFragment
 import ru.nikitaartamonov.materialdesign.ui.pages.weather.WeatherFragment
-import ru.nikitaartamonov.materialdesign.utils.Themes
+import ru.nikitaartamonov.materialdesign.utils.ThemePreferences
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setTheme(Themes.getCurrentTheme(this))
+        setTheme(ThemePreferences.getCurrentTheme(this))
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
