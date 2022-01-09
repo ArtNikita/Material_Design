@@ -3,7 +3,6 @@ package ru.nikitaartamonov.materialdesign.ui.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import ru.nikitaartamonov.materialdesign.databinding.ActivityMainBinding
 import ru.nikitaartamonov.materialdesign.domain.Screens
 import ru.nikitaartamonov.materialdesign.ui.pages.daily_image.DailyImageFragment
@@ -38,16 +37,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openScreen(screen: Screens) {
-        val fragmentToOpen: Fragment = when (screen) {
-            Screens.DAILY_IMAGE -> {
-                DailyImageFragment()
-            }
-            Screens.EARTH_PHOTOS -> {
-                EarthPhotosFragment()
-            }
-            Screens.WEATHER -> {
-                WeatherFragment()
-            }
+        val fragmentToOpen = when (screen) {
+            Screens.DAILY_IMAGE -> DailyImageFragment()
+            Screens.EARTH_PHOTOS -> EarthPhotosFragment()
+            Screens.WEATHER -> WeatherFragment()
         }
         supportFragmentManager
             .beginTransaction()
