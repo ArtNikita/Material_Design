@@ -41,13 +41,14 @@ class WeatherViewModel : ViewModel() {
 
     private fun generateGstListString(gstData: List<GstWrapper>): String {
         val stringBuilder = StringBuilder()
-        for (i in gstData.size - 1 downTo 0) {
+        gstData.reversed().forEachIndexed { index, gstItem ->
             stringBuilder
-                .append(gstData.size - i)
+                .append(index + 1)
                 .append(". ")
-                .append(gstData[i].startTime)
-            if (i == 0) continue
-            stringBuilder.append("\n")
+                .append(gstItem.startTime)
+            if (index != gstData.size - 1) {
+                stringBuilder.append("\n")
+            }
         }
         return stringBuilder.toString()
     }
