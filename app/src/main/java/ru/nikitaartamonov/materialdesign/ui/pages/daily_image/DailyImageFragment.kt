@@ -13,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.nikitaartamonov.materialdesign.R
 import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
 import ru.nikitaartamonov.materialdesign.databinding.FragmentDailyImageBinding
+import ru.nikitaartamonov.materialdesign.ui.settings.SettingsBottomSheetDialogFragment
 
 class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
 
@@ -25,12 +26,12 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initViewModel()
-        viewModel.onViewIsReady()
+        viewModel.onViewIsReady(requireActivity().application)
     }
 
     private fun initViewModel() {
-        viewModel.renderImageDataLiveData.observe(viewLifecycleOwner) {
-            renderImageData(it)
+        viewModel.renderImageDataLiveData.observe(viewLifecycleOwner) { imageWrapper ->
+            renderImageData(imageWrapper)
         }
         viewModel.bottomSheetStateLiveData.observe(viewLifecycleOwner) { currentState ->
             bottomSheetBehavior.state = currentState
@@ -41,12 +42,30 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
                 startActivity(browserIntent)
             }
         }
+        viewModel.openDescriptionLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { openDescription() }
+        }
+        viewModel.openSettingsLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { openSettings() }
+        }
+    }
+
+    private fun openSettings() {
+        SettingsBottomSheetDialogFragment().show(
+            requireActivity().supportFragmentManager,
+            SettingsBottomSheetDialogFragment::class.java.simpleName
+        )
+    }
+
+    private fun openDescription() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     private fun renderImageData(imageWrapper: ImageWrapper) {
+        val imageUrl = if (binding.hdQualityChip.isChecked) imageWrapper.hdUrl else imageWrapper.url
         Glide
             .with(requireContext())
-            .load(if (binding.hdQualityChip.isChecked) imageWrapper.hdUrl else imageWrapper.url)
+            .load(imageUrl)
             .into(binding.dailyImageView)
         binding.bottomSheet.titleTextView.text = imageWrapper.title
         binding.bottomSheet.copyrightTextView.text = imageWrapper.copyright
@@ -57,6 +76,16 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
         initBottomSheet()
         initWikipediaEditText()
         initQualityChip()
+        initDescriptionChip()
+        initSettingsChip()
+    }
+
+    private fun initSettingsChip() {
+        binding.settingsChip.setOnClickListener { viewModel.settingsChipClicked() }
+    }
+
+    private fun initDescriptionChip() {
+        binding.descriptionChip.setOnClickListener { viewModel.descriptionChipClicked() }
     }
 
     private fun initQualityChip() {
@@ -65,22 +94,22 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
 
     private fun initBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheetContainer)
-        bottomSheetBehavior.addBottomSheetCallback(
-            object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    viewModel.onBottomSheetStateChanged(newState)
-                }
-
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    //do nothing
-                }
+        val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                viewModel.onBottomSheetStateChanged(newState)
             }
-        )
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                //do nothing
+            }
+        }
+        bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
     }
 
     private fun initWikipediaEditText() {
         binding.wikipediaTextInputLayout.setEndIconOnClickListener {
-            viewModel.onWikiIconClicked(binding.wikipediaTextInputEditText.text.toString())
+            val textToSearch = binding.wikipediaTextInputEditText.text.toString()
+            viewModel.onWikiIconClicked(textToSearch)
         }
     }
 }

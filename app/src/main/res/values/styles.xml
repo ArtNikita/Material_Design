@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Normal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/normal_space</item>
+        <item name="boxCornerRadiusTopStart">@dimen/text_input_layout_corner_radius</item>
+    </style>
+
+    <style name="NormalBottomSheet">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">?colorPrimaryVariant</item>
+        <item name="behavior_peekHeight">@dimen/bottom_sheet_peek_height</item>
+        <item name="layout_behavior">
+            com.google.android.material.bottomsheet.BottomSheetBehavior
+        </item>
+        <item name="behavior_hideable">true</item>
+    </style>
+
+    <style name="BottomSheetHeaderTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">@dimen/normal_space</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/bottom_sheet_header_text_size</item>
+    </style>
+</resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,16 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/bottom_sheet_peek_height">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/hd_quality_chip"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_space"
-                android:text="@string/hd"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/daily_image_view"
@@ -35,14 +26,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/wikipedia_text_input_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/hd_quality_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/normal_space"
+                android:text="@string/hd"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/wikipedia_text_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Normal"
                 android:hint="@string/wikipedia_edit_text_hint"
-                app:boxCornerRadiusTopStart="@dimen/text_input_layout_corner_radius"
                 app:endIconDrawable="@drawable/ic_wikipedia"
                 app:endIconMode="custom"
                 app:helperText="@string/wikipedia_edit_text_helper_text"
@@ -61,8 +58,32 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_sheet_peek_height"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="@dimen/normal_space">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/description_chip"
+            style="@style/Widget.MaterialComponents.Chip.Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/settings_chip"
+            style="@style/Widget.MaterialComponents.Chip.Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/settings" />
+
+    </FrameLayout>
+
     <include
         android:id="@+id/bottom_sheet"
-        layout="@layout/bottom_sheet_daily_image_description" />
+        layout="@layout/bottom_sheet_daily_image_description"
+        tool:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
