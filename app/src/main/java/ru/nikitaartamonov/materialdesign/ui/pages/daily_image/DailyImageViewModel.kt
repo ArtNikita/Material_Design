@@ -1,18 +1,19 @@
 package ru.nikitaartamonov.materialdesign.ui.pages.daily_image
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import ru.nikitaartamonov.materialdesign.data.retrofit.ImageLoaderRetrofit
+import ru.nikitaartamonov.materialdesign.app.App
 import ru.nikitaartamonov.materialdesign.data.retrofit.ImageWrapper
 import ru.nikitaartamonov.materialdesign.domain.Event
-import ru.nikitaartamonov.materialdesign.domain.ImageLoader
+import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
 import ru.nikitaartamonov.materialdesign.domain.ImageLoadingState
 
 class DailyImageViewModel : ViewModel() {
 
-    private val imageLoader: ImageLoader = ImageLoaderRetrofit()
+    private lateinit var nasaDataLoader: NasaDataLoader
     private var imageWrapper: ImageWrapper? = null
     private var bottomSheetCurrentState = BottomSheetBehavior.STATE_COLLAPSED
 
@@ -22,8 +23,13 @@ class DailyImageViewModel : ViewModel() {
     val openDescriptionLiveData: LiveData<Event<Boolean>> = MutableLiveData()
     val openSettingsLiveData: LiveData<Event<Boolean>> = MutableLiveData()
 
-    fun onViewIsReady() {
-        loadImage()
+    fun onViewIsReady(app: Application) {
+        nasaDataLoader = (app as App).nasaDataLoader
+        if (imageWrapper == null) {
+            loadImage()
+        } else {
+            imageWrapper?.apply { renderImageDataLiveData.postValue(this) }
+        }
         bottomSheetStateLiveData.postValue(bottomSheetCurrentState)
     }
 
@@ -41,7 +47,7 @@ class DailyImageViewModel : ViewModel() {
     }
 
     private fun loadImage() {
-        imageLoader.loadImage { state ->
+        nasaDataLoader.loadImage { state ->
             when (state) {
                 is ImageLoadingState.Error -> {
                     //todo notify about loading error
