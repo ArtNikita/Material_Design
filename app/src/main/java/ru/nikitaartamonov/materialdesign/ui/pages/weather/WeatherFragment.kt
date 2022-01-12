@@ -9,6 +9,9 @@ import com.bumptech.glide.Glide
 import ru.nikitaartamonov.materialdesign.R
 import ru.nikitaartamonov.materialdesign.databinding.FragmentWeatherBinding
 
+private const val IMAGE_URL =
+    "https://images.pexels.com/photos/3617500/pexels-photo-3617500.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+
 class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     private val binding by viewBinding(FragmentWeatherBinding::bind)
@@ -24,11 +27,9 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     }
 
     private fun loadToolbarImage() {
-        val imageUrl =
-            "https://images.pexels.com/photos/3617500/pexels-photo-3617500.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
         Glide
             .with(requireContext())
-            .load(imageUrl)
+            .load(IMAGE_URL)
             .into(binding.weatherToolbarImage)
     }
 }
