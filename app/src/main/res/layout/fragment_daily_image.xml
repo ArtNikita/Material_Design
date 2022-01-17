@@ -9,11 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/bottom_sheet_peek_height"
-            app:layoutDescription="@xml/fragment_daily_image_scene">
+            android:layout_marginBottom="@dimen/bottom_sheet_peek_height">
 
             <ImageView
                 android:id="@+id/daily_image_view"
@@ -55,7 +54,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
