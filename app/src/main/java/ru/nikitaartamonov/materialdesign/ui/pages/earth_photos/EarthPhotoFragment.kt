@@ -1,7 +1,10 @@
 package ru.nikitaartamonov.materialdesign.ui.pages.earth_photos
 
 import android.os.Bundle
+import android.transition.ChangeImageTransform
+import android.transition.TransitionManager
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
@@ -23,6 +26,23 @@ class EarthPhotoFragment : Fragment(R.layout.fragment_earth_photo) {
         val date = args.getString(DATE_KEY)
         setImage(imageLinkPart)
         binding.earthPhotoDateTextView.text = date
+        initImageViewClickListener()
+    }
+
+    private fun initImageViewClickListener() {
+        binding.earthPhotoImageView.setOnClickListener {
+            TransitionManager.beginDelayedTransition(
+                binding.earthPhotoFragmentConstraintLayout,
+                ChangeImageTransform()
+            )
+            val currentScaleType = binding.earthPhotoImageView.scaleType
+            val newScaleType = if (currentScaleType == ImageView.ScaleType.FIT_CENTER) {
+                ImageView.ScaleType.CENTER_CROP
+            } else {
+                ImageView.ScaleType.FIT_CENTER
+            }
+            binding.earthPhotoImageView.scaleType = newScaleType
+        }
     }
 
     private fun setImage(imageLinkPart: String) {
