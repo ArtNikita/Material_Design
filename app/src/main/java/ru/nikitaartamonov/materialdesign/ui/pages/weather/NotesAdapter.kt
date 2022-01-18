@@ -20,6 +20,10 @@ class NotesAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun setList(notes: List<Note>){
+        notesList = notes
+    }
+
     fun requireNotes() = notesList.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {

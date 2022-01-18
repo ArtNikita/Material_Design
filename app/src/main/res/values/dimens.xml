@@ -10,4 +10,5 @@
     <dimen name="app_bar_height">300dp</dimen>
     <dimen name="note_height">60dp</dimen>
     <dimen name="card_view_corner_radius">8dp</dimen>
+    <dimen name="notes_recycler_view_height">700dp</dimen>
 </resources>

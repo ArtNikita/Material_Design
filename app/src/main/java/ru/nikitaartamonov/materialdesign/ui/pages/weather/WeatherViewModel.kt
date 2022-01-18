@@ -11,18 +11,19 @@ import ru.nikitaartamonov.materialdesign.domain.GstDataLoadingState
 import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
 import ru.nikitaartamonov.materialdesign.domain.notes.Note
 import ru.nikitaartamonov.materialdesign.domain.notes.NotesDiffUtil
+import java.util.*
 
 class WeatherViewModel : ViewModel() {
 
     private lateinit var nasaDataLoader: NasaDataLoader
     private var gstData: List<GstWrapper>? = null
 
-    private val notes by lazy {
-        listOf(
+    private var notes = listOf(
             Note(Note.id++, "Note 0"),
-            Note(Note.id++, "Note 1")
+            Note(Note.id++, "Note 1"),
+            Note(Note.id++, "Note 2"),
+            Note(Note.id++, "Note 3")
         )
-    }
 
     val setGstDataLiveData: LiveData<String> = MutableLiveData()
     val setNotesRecyclerViewContentLiveData: LiveData<List<Note>> = MutableLiveData()
@@ -71,7 +72,32 @@ class WeatherViewModel : ViewModel() {
         val noteIndex = oldNotes.indexOf(note)
         oldNotes[noteIndex] = note.copy()
         note.content += "🥸"
-        val diffUtil = NotesDiffUtil(oldNotes, adapter.requireNotes())
+        updateListWithDiffUtil(oldNotes, adapter.requireNotes(), adapter)
+        notes = adapter.requireNotes()
+    }
+
+    fun onItemMoved(from: Int, to: Int, adapter: NotesAdapter) {
+        val oldNotes = adapter.requireNotes()
+        val newNotes = adapter.requireNotes().apply { Collections.swap(this, from, to) }
+        adapter.setList(newNotes)
+        updateListWithDiffUtil(oldNotes, newNotes, adapter)
+        notes = adapter.requireNotes()
+    }
+
+    fun onItemRemoved(position: Int, adapter: NotesAdapter) {
+        val oldNotes = adapter.requireNotes()
+        val newNotes = adapter.requireNotes().apply { removeAt(position) }
+        adapter.setList(newNotes)
+        updateListWithDiffUtil(oldNotes, newNotes, adapter)
+        notes = adapter.requireNotes()
+    }
+
+    private fun updateListWithDiffUtil(
+        oldNotes: List<Note>,
+        newNotes: List<Note>,
+        adapter: NotesAdapter
+    ) {
+        val diffUtil = NotesDiffUtil(oldNotes, newNotes)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         diffResult.dispatchUpdatesTo(adapter)
     }
