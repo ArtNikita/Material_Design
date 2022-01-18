@@ -3,10 +3,16 @@ package ru.nikitaartamonov.materialdesign.ui.pages.weather
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.nikitaartamonov.materialdesign.domain.Note
+import ru.nikitaartamonov.materialdesign.domain.notes.Note
+import ru.nikitaartamonov.materialdesign.domain.notes.NoteClickListener
 
 class NotesAdapter : RecyclerView.Adapter<NoteViewHolder>() {
     private var notesList: List<Note> = emptyList()
+    private lateinit var listener: NoteClickListener
+
+    fun setListener(listener: NoteClickListener) {
+        this.listener = listener
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setListAndNotify(notes: List<Note>) {
@@ -14,8 +20,10 @@ class NotesAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun requireNotes() = notesList.toMutableList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder(parent)
+        return NoteViewHolder(parent, listener)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {

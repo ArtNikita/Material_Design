@@ -4,12 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/note_height"
     android:layout_marginBottom="@dimen/normal_space"
+    android:clickable="true"
+    android:focusable="true"
     app:cardCornerRadius="@dimen/card_view_corner_radius">
 
     <TextView
         android:id="@+id/note_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/small_space" />
+        android:layout_margin="@dimen/small_space"
+        android:ellipsize="end"
+        android:maxLines="2" />
 
 </com.google.android.material.card.MaterialCardView>

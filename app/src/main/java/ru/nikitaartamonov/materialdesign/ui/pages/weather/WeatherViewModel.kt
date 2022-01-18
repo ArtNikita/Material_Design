@@ -4,11 +4,13 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.DiffUtil
 import ru.nikitaartamonov.materialdesign.app.App
 import ru.nikitaartamonov.materialdesign.data.retrofit.GstWrapper
 import ru.nikitaartamonov.materialdesign.domain.GstDataLoadingState
 import ru.nikitaartamonov.materialdesign.domain.NasaDataLoader
-import ru.nikitaartamonov.materialdesign.domain.Note
+import ru.nikitaartamonov.materialdesign.domain.notes.Note
+import ru.nikitaartamonov.materialdesign.domain.notes.NotesDiffUtil
 
 class WeatherViewModel : ViewModel() {
 
@@ -17,8 +19,8 @@ class WeatherViewModel : ViewModel() {
 
     private val notes by lazy {
         listOf(
-            Note(Note.id++, "Test note"),
-            Note(Note.id++, "Another note")
+            Note(Note.id++, "Note 0"),
+            Note(Note.id++, "Note 1")
         )
     }
 
@@ -62,6 +64,16 @@ class WeatherViewModel : ViewModel() {
             }
         }
         return stringBuilder.toString()
+    }
+
+    fun onNoteClick(adapter: NotesAdapter, note: Note) {
+        val oldNotes = adapter.requireNotes()
+        val noteIndex = oldNotes.indexOf(note)
+        oldNotes[noteIndex] = note.copy()
+        note.content += "🥸"
+        val diffUtil = NotesDiffUtil(oldNotes, adapter.requireNotes())
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        diffResult.dispatchUpdatesTo(adapter)
     }
 }
 

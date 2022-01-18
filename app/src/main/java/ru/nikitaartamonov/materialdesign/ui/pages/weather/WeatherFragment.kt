@@ -9,6 +9,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import ru.nikitaartamonov.materialdesign.R
 import ru.nikitaartamonov.materialdesign.databinding.FragmentWeatherBinding
+import ru.nikitaartamonov.materialdesign.domain.notes.Note
+import ru.nikitaartamonov.materialdesign.domain.notes.NoteClickListener
 
 private const val IMAGE_URL =
     "https://images.pexels.com/photos/3617500/pexels-photo-3617500.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
@@ -18,7 +20,13 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     private val binding by viewBinding(FragmentWeatherBinding::bind)
     private val viewModel by viewModels<WeatherViewModel>()
 
-    private val adapter by lazy { NotesAdapter() }
+    private val adapter by lazy { NotesAdapter().apply {
+        setListener(object : NoteClickListener {
+            override fun onClick(note: Note) {
+                viewModel.onNoteClick(this@apply, note)
+            }
+        })
+    } }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
