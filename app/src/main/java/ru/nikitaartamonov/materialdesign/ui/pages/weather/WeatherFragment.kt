@@ -38,6 +38,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         viewModel.onViewCreated(requireActivity().application)
         initNotesRecyclerView()
         initViewModel()
+        binding.addFloatingActionButton.setOnClickListener {viewModel.addFabPressed(adapter)}
     }
 
     private fun initViewModel() {

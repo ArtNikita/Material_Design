@@ -101,6 +101,15 @@ class WeatherViewModel : ViewModel() {
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         diffResult.dispatchUpdatesTo(adapter)
     }
+
+    fun addFabPressed(adapter: NotesAdapter) {
+        val newNote = Note(Note.id++, "Note ${Note.id}")
+        val oldNotes = adapter.requireNotes()
+        val newNotes = adapter.requireNotes().apply { add(newNote) }
+        adapter.setList(newNotes)
+        updateListWithDiffUtil(oldNotes, newNotes, adapter)
+        notes = adapter.requireNotes()
+    }
 }
 
 private fun <T> LiveData<T>.postValue(value: T) {
