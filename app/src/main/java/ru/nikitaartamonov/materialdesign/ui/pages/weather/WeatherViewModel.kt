@@ -79,14 +79,27 @@ class WeatherViewModel : ViewModel() {
     fun onItemMoved(from: Int, to: Int, adapter: NotesAdapter) {
         val oldNotes = adapter.requireNotes()
         val newNotes = adapter.requireNotes().apply { Collections.swap(this, from, to) }
-        adapter.setList(newNotes)
-        updateListWithDiffUtil(oldNotes, newNotes, adapter)
-        notes = adapter.requireNotes()
+        updateAndSaveList(oldNotes, newNotes, adapter)
     }
 
     fun onItemRemoved(position: Int, adapter: NotesAdapter) {
         val oldNotes = adapter.requireNotes()
         val newNotes = adapter.requireNotes().apply { removeAt(position) }
+        updateAndSaveList(oldNotes, newNotes, adapter)
+    }
+
+    fun addFabPressed(adapter: NotesAdapter) {
+        val newNote = Note(Note.id++, "Note ${Note.id}")
+        val oldNotes = adapter.requireNotes()
+        val newNotes = adapter.requireNotes().apply { add(newNote) }
+        updateAndSaveList(oldNotes, newNotes, adapter)
+    }
+
+    private fun updateAndSaveList(
+        oldNotes: List<Note>,
+        newNotes: List<Note>,
+        adapter: NotesAdapter
+    ) {
         adapter.setList(newNotes)
         updateListWithDiffUtil(oldNotes, newNotes, adapter)
         notes = adapter.requireNotes()
@@ -100,15 +113,6 @@ class WeatherViewModel : ViewModel() {
         val diffUtil = NotesDiffUtil(oldNotes, newNotes)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         diffResult.dispatchUpdatesTo(adapter)
-    }
-
-    fun addFabPressed(adapter: NotesAdapter) {
-        val newNote = Note(Note.id++, "Note ${Note.id}")
-        val oldNotes = adapter.requireNotes()
-        val newNotes = adapter.requireNotes().apply { add(newNote) }
-        adapter.setList(newNotes)
-        updateListWithDiffUtil(oldNotes, newNotes, adapter)
-        notes = adapter.requireNotes()
     }
 }
 
