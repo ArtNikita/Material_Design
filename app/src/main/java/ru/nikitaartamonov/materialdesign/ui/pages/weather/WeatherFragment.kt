@@ -38,7 +38,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         viewModel.onViewCreated(requireActivity().application)
         initNotesRecyclerView()
         initViewModel()
-        binding.addFloatingActionButton.setOnClickListener {viewModel.addFabPressed(adapter)}
+        binding.addFloatingActionButton.setOnClickListener { viewModel.addFabPressed(adapter) }
     }
 
     private fun initViewModel() {
@@ -46,7 +46,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
             binding.gstListTextView.text = gstList
         }
         viewModel.setNotesRecyclerViewContentLiveData.observe(viewLifecycleOwner) { notes ->
-            adapter.setListAndNotify(notes)
+            adapter.updateItems(notes)
         }
     }
 

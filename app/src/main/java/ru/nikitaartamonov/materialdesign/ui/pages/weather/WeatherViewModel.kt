@@ -19,11 +19,11 @@ class WeatherViewModel : ViewModel() {
     private var gstData: List<GstWrapper>? = null
 
     private var notes = listOf(
-            Note(Note.id++, "Note 0"),
-            Note(Note.id++, "Note 1"),
-            Note(Note.id++, "Note 2"),
-            Note(Note.id++, "Note 3")
-        )
+        Note(Note.id++, "Note ${Note.id}"),
+        Note(Note.id++, "Note ${Note.id}"),
+        Note(Note.id++, "Note ${Note.id}"),
+        Note(Note.id++, "Note ${Note.id}")
+    )
 
     val setGstDataLiveData: LiveData<String> = MutableLiveData()
     val setNotesRecyclerViewContentLiveData: LiveData<List<Note>> = MutableLiveData()

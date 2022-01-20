@@ -6,8 +6,8 @@ class NotesDiffUtil(
     private val oldNotes: List<Note>,
     private val newNotes: List<Note>
 ) : DiffUtil.Callback() {
-    override fun getOldListSize(): Int = oldNotes.size
 
+    override fun getOldListSize(): Int = oldNotes.size
 
     override fun getNewListSize(): Int = newNotes.size
 

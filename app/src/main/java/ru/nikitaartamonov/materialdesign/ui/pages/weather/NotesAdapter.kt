@@ -7,6 +7,7 @@ import ru.nikitaartamonov.materialdesign.domain.notes.Note
 import ru.nikitaartamonov.materialdesign.domain.notes.NoteClickListener
 
 class NotesAdapter : RecyclerView.Adapter<NoteViewHolder>() {
+
     private var notesList: List<Note> = emptyList()
     private lateinit var listener: NoteClickListener
 
@@ -15,12 +16,12 @@ class NotesAdapter : RecyclerView.Adapter<NoteViewHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setListAndNotify(notes: List<Note>) {
+    fun updateItems(notes: List<Note>) {
         notesList = notes
         notifyDataSetChanged()
     }
 
-    fun setList(notes: List<Note>){
+    fun setList(notes: List<Note>) {
         notesList = notes
     }
 
@@ -34,7 +35,11 @@ class NotesAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         holder.bind(getNote(position))
     }
 
-    override fun getItemCount(): Int = notesList.size
+    override fun getItemCount(): Int {
+        return notesList.size
+    }
 
-    private fun getNote(position: Int) = notesList[position]
+    private fun getNote(position: Int): Note {
+        return notesList[position]
+    }
 }
