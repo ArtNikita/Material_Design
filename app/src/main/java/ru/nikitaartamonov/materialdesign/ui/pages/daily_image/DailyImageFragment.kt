@@ -97,14 +97,13 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
     }
 
     private fun animateQualityChip() {
-        ObjectAnimator.ofFloat(
+        val qualityChipAnimator = ObjectAnimator.ofFloat(
             binding.hdQualityChip,
-            "rotation",
+            View.ROTATION,
             0f, -15f, 15f, 0f
-        ).apply {
-            duration = 200
-            start()
-        }
+        )
+        qualityChipAnimator.duration = 200
+        qualityChipAnimator.start()
     }
 
     private fun initBottomSheet() {

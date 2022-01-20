@@ -32,23 +32,21 @@ class EarthPhotoFragment : Fragment(R.layout.fragment_earth_photo) {
         super.onViewCreated(view, savedInstanceState)
         setImage(imageLinkPart)
         binding.earthPhotoDateTextView.text = date
-        initImageViewClickListener()
+        binding.earthPhotoImageView.setOnClickListener { scaleEarthPhotoImageView() }
     }
 
-    private fun initImageViewClickListener() {
-        binding.earthPhotoImageView.setOnClickListener {
-            TransitionManager.beginDelayedTransition(
-                binding.earthPhotoFragmentConstraintLayout,
-                ChangeImageTransform()
-            )
-            val currentScaleType = binding.earthPhotoImageView.scaleType
-            val newScaleType = if (currentScaleType == ImageView.ScaleType.FIT_CENTER) {
-                ImageView.ScaleType.CENTER_CROP
-            } else {
-                ImageView.ScaleType.FIT_CENTER
-            }
-            binding.earthPhotoImageView.scaleType = newScaleType
+    private fun scaleEarthPhotoImageView() {
+        TransitionManager.beginDelayedTransition(
+            binding.earthPhotoFragmentConstraintLayout,
+            ChangeImageTransform()
+        )
+        val currentScaleType = binding.earthPhotoImageView.scaleType
+        val newScaleType = if (currentScaleType == ImageView.ScaleType.FIT_CENTER) {
+            ImageView.ScaleType.CENTER_CROP
+        } else {
+            ImageView.ScaleType.FIT_CENTER
         }
+        binding.earthPhotoImageView.scaleType = newScaleType
     }
 
     private fun setImage(imageLinkPart: String) {
