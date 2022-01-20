@@ -18,31 +18,35 @@ class EarthPhotoFragment : Fragment(R.layout.fragment_earth_photo) {
 
     private val binding by viewBinding(FragmentEarthPhotoBinding::bind)
 
+    private val args by lazy {
+        arguments ?: throw IllegalStateException("Arguments should be provided")
+    }
+    private val imageLinkPart by lazy {
+        args.getString(IMAGE_LINK_PART_KEY)
+            ?: throw IllegalStateException("Image link should be provided")
+    }
+    private val date by lazy { args.getString(DATE_KEY) }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args = arguments ?: throw IllegalStateException("Arguments should be provided")
-        val imageLinkPart = args.getString(IMAGE_LINK_PART_KEY)
-            ?: throw IllegalStateException("Image link should be provided")
-        val date = args.getString(DATE_KEY)
         setImage(imageLinkPart)
         binding.earthPhotoDateTextView.text = date
-        initImageViewClickListener()
+        binding.earthPhotoImageView.setOnClickListener { scaleEarthPhotoImageView() }
     }
 
-    private fun initImageViewClickListener() {
-        binding.earthPhotoImageView.setOnClickListener {
-            TransitionManager.beginDelayedTransition(
-                binding.earthPhotoFragmentConstraintLayout,
-                ChangeImageTransform()
-            )
-            val currentScaleType = binding.earthPhotoImageView.scaleType
-            val newScaleType = if (currentScaleType == ImageView.ScaleType.FIT_CENTER) {
-                ImageView.ScaleType.CENTER_CROP
-            } else {
-                ImageView.ScaleType.FIT_CENTER
-            }
-            binding.earthPhotoImageView.scaleType = newScaleType
+    private fun scaleEarthPhotoImageView() {
+        TransitionManager.beginDelayedTransition(
+            binding.earthPhotoFragmentConstraintLayout,
+            ChangeImageTransform()
+        )
+        val currentScaleType = binding.earthPhotoImageView.scaleType
+        val newScaleType = if (currentScaleType == ImageView.ScaleType.FIT_CENTER) {
+            ImageView.ScaleType.CENTER_CROP
+        } else {
+            ImageView.ScaleType.FIT_CENTER
         }
+        binding.earthPhotoImageView.scaleType = newScaleType
     }
 
     private fun setImage(imageLinkPart: String) {
