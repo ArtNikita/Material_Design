@@ -1,7 +1,10 @@
 package ru.nikitaartamonov.materialdesign.ui.pages.earth_photos
 
 import android.os.Bundle
+import android.transition.ChangeImageTransform
+import android.transition.TransitionManager
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
@@ -15,17 +18,35 @@ class EarthPhotoFragment : Fragment(R.layout.fragment_earth_photo) {
 
     private val binding by viewBinding(FragmentEarthPhotoBinding::bind)
 
+    private val args by lazy {
+        arguments ?: throw IllegalStateException("Arguments should be provided")
+    }
     private val imageLinkPart by lazy {
-        requireArguments().getString(IMAGE_LINK_PART_KEY)
+        args.getString(IMAGE_LINK_PART_KEY)
             ?: throw IllegalStateException("Image link should be provided")
     }
-    private val dateOfPhoto by lazy { requireArguments().getString(DATE_KEY) }
+    private val date by lazy { args.getString(DATE_KEY) }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setImage(imageLinkPart)
-        binding.earthPhotoDateTextView.text = dateOfPhoto
+        binding.earthPhotoDateTextView.text = date
+        binding.earthPhotoImageView.setOnClickListener { scaleEarthPhotoImageView() }
+    }
+
+    private fun scaleEarthPhotoImageView() {
+        TransitionManager.beginDelayedTransition(
+            binding.earthPhotoFragmentConstraintLayout,
+            ChangeImageTransform()
+        )
+        val currentScaleType = binding.earthPhotoImageView.scaleType
+        val newScaleType = if (currentScaleType == ImageView.ScaleType.FIT_CENTER) {
+            ImageView.ScaleType.CENTER_CROP
+        } else {
+            ImageView.ScaleType.FIT_CENTER
+        }
+        binding.earthPhotoImageView.scaleType = newScaleType
     }
 
     private fun setImage(imageLinkPart: String) {
