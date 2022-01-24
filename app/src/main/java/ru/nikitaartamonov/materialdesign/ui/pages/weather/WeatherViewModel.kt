@@ -67,29 +67,29 @@ class WeatherViewModel : ViewModel() {
         return stringBuilder.toString()
     }
 
-    fun onNoteClick(oldNotes: MutableList<Note>, note: Note) {
-        val newNotes = oldNotes.toMutableList()
-        val noteIndex = oldNotes.indexOf(note)
+    fun onNoteClick(note: Note) {
+        val newNotes = notes.toMutableList()
+        val noteIndex = notes.indexOf(note)
         newNotes[noteIndex] = note.copy().apply { content += "🥸" }
         updateListWithDiffUtilLiveData.postValue(Event(newNotes))
         notes = newNotes
     }
 
-    fun onItemMoved(from: Int, to: Int, oldNotes: MutableList<Note>) {
-        val newNotes = oldNotes.toMutableList()
+    fun onItemMoved(from: Int, to: Int) {
+        val newNotes = notes.toMutableList()
         Collections.swap(newNotes, from, to)
         updateAndSaveList(newNotes)
     }
 
-    fun onItemRemoved(position: Int, oldNotes: MutableList<Note>) {
-        val newNotes = oldNotes.toMutableList()
+    fun onItemRemoved(position: Int) {
+        val newNotes = notes.toMutableList()
         newNotes.removeAt(position)
         updateAndSaveList(newNotes)
     }
 
-    fun addFabPressed(oldNotes: MutableList<Note>) {
+    fun addFabPressed() {
         val newNote = Note(Note.id++, "Note ${Note.id}")
-        val newNotes = oldNotes.toMutableList()
+        val newNotes = notes.toMutableList()
         newNotes += newNote
         updateAndSaveList(newNotes)
     }

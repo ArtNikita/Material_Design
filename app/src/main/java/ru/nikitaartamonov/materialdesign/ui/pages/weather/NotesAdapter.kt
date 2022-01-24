@@ -6,14 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.nikitaartamonov.materialdesign.domain.notes.Note
 import ru.nikitaartamonov.materialdesign.domain.notes.NoteClickListener
 
-class NotesAdapter : RecyclerView.Adapter<NoteViewHolder>() {
+class NotesAdapter(private val listener: NoteClickListener) :
+    RecyclerView.Adapter<NoteViewHolder>() {
 
     private var notesList: List<Note> = emptyList()
-    private lateinit var listener: NoteClickListener
-
-    fun setListener(listener: NoteClickListener) {
-        this.listener = listener
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateItems(notes: List<Note>) {

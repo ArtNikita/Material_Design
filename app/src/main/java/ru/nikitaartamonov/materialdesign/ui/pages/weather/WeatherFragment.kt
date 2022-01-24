@@ -25,13 +25,13 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     private val viewModel by viewModels<WeatherViewModel>()
 
     private val adapter by lazy {
-        NotesAdapter().apply {
-            setListener(object : NoteClickListener {
+        NotesAdapter(
+            object : NoteClickListener {
                 override fun onClick(note: Note) {
-                    viewModel.onNoteClick(requireNotes(), note)
+                    viewModel.onNoteClick(note)
                 }
-            })
-        }
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
         initViewModel()
 
-        binding.addFloatingActionButton.setOnClickListener { viewModel.addFabPressed(adapter.requireNotes()) }
+        binding.addFloatingActionButton.setOnClickListener { viewModel.addFabPressed() }
     }
 
     private fun initViewModel() {
@@ -68,8 +68,8 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         binding.notesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.notesRecyclerView.adapter = adapter
         val itemDragTouchHelperCallback = ItemDragTouchHelperCallback(
-            onItemMove = { from, to -> viewModel.onItemMoved(from, to, adapter.requireNotes()) },
-            onItemSwiped = { position -> viewModel.onItemRemoved(position, adapter.requireNotes()) }
+            onItemMove = { from, to -> viewModel.onItemMoved(from, to) },
+            onItemSwiped = { position -> viewModel.onItemRemoved(position) }
         )
         ItemTouchHelper(itemDragTouchHelperCallback).attachToRecyclerView(binding.notesRecyclerView)
     }
