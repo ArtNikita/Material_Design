@@ -19,8 +19,11 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         loadToolbarImage()
+
         viewModel.onViewCreated(requireActivity().application)
+
         viewModel.setGstDataLiveData.observe(viewLifecycleOwner) { gstList ->
             binding.gstListTextView.text = gstList
         }
