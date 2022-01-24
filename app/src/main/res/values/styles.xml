@@ -26,4 +26,9 @@
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/bottom_sheet_header_text_size</item>
     </style>
+
+    <style name="SpaceWeatherToolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 </resources>
