@@ -34,10 +34,15 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         loadToolbarImage()
+
         viewModel.onViewCreated(requireActivity().application)
+
         initNotesRecyclerView()
+
         initViewModel()
+
         binding.addFloatingActionButton.setOnClickListener { viewModel.addFabPressed(adapter) }
     }
 

@@ -18,14 +18,11 @@ class EarthPhotoFragment : Fragment(R.layout.fragment_earth_photo) {
 
     private val binding by viewBinding(FragmentEarthPhotoBinding::bind)
 
-    private val args by lazy {
-        arguments ?: throw IllegalStateException("Arguments should be provided")
-    }
     private val imageLinkPart by lazy {
-        args.getString(IMAGE_LINK_PART_KEY)
+        requireArguments().getString(IMAGE_LINK_PART_KEY)
             ?: throw IllegalStateException("Image link should be provided")
     }
-    private val date by lazy { args.getString(DATE_KEY) }
+    private val date by lazy { requireArguments().getString(DATE_KEY) }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
