@@ -25,7 +25,9 @@ class NotesAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         notesList = notes
     }
 
-    fun requireNotes() = notesList.toMutableList()
+    fun requireNotes(): MutableList<Note> {
+        return notesList.toMutableList()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(parent, listener)

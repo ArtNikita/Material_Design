@@ -23,8 +23,11 @@ class ItemDragTouchHelperCallback(
         target: RecyclerView.ViewHolder
     ): Boolean {
         val fromPosition = viewHolder.adapterPosition
+
         val toPosition = target.adapterPosition
+
         onItemMove(fromPosition, toPosition)
+
         return true
     }
 

@@ -28,7 +28,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         NotesAdapter().apply {
             setListener(object : NoteClickListener {
                 override fun onClick(note: Note) {
-                    viewModel.onNoteClick(this@apply.requireNotes(), note)
+                    viewModel.onNoteClick(requireNotes(), note)
                 }
             })
         }
