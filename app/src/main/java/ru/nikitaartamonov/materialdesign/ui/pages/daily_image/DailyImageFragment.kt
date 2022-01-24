@@ -1,5 +1,6 @@
 package ru.nikitaartamonov.materialdesign.ui.pages.daily_image
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -89,7 +90,20 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
     }
 
     private fun initQualityChip() {
-        binding.hdQualityChip.setOnClickListener { viewModel.qualityChipTouched() }
+        binding.hdQualityChip.setOnClickListener {
+            viewModel.qualityChipTouched()
+            animateQualityChip()
+        }
+    }
+
+    private fun animateQualityChip() {
+        val qualityChipAnimator = ObjectAnimator.ofFloat(
+            binding.hdQualityChip,
+            View.ROTATION,
+            0f, -15f, 15f, 0f
+        )
+        qualityChipAnimator.duration = 200
+        qualityChipAnimator.start()
     }
 
     private fun initBottomSheet() {
