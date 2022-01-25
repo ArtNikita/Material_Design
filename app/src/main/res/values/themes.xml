@@ -31,4 +31,8 @@
 
         <item name="fontFamily">@font/ubuntu</item>
     </style>
+
+    <style name="Theme.Police.SplashScreenTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
 </resources>
