@@ -67,6 +67,8 @@ class DailyImageFragment : Fragment(R.layout.fragment_daily_image) {
         Glide
             .with(requireContext())
             .load(imageUrl)
+            .placeholder(R.drawable.ic_baseline_image_24)
+            .error(R.drawable.ic_baseline_image_not_supported_24)
             .into(binding.dailyImageView)
         binding.bottomSheet.titleTextView.text = imageWrapper.title
         binding.bottomSheet.copyrightTextView.text = imageWrapper.copyright

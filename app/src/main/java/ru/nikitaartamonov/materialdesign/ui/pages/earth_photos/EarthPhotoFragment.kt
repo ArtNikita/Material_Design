@@ -51,6 +51,7 @@ class EarthPhotoFragment : Fragment(R.layout.fragment_earth_photo) {
         Glide
             .with(requireContext())
             .load(photoUrl)
+            .placeholder(R.drawable.ic_baseline_panorama_photosphere_24)
             .into(binding.earthPhotoImageView)
     }
 
