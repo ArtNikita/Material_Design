@@ -25,8 +25,7 @@ class WeatherViewModel : ViewModel() {
     )
 
     val setGstDataLiveData: LiveData<String> = MutableLiveData()
-    val setNotesRecyclerViewContentLiveData: LiveData<List<Note>> = MutableLiveData()
-    val updateListWithDiffUtilLiveData: LiveData<Event<List<Note>>> = MutableLiveData()
+    val updateListLiveData: LiveData<Event<List<Note>>> = MutableLiveData()
 
     fun onViewCreated(application: Application) {
         nasaDataLoader = (application as App).nasaDataLoader
@@ -36,7 +35,7 @@ class WeatherViewModel : ViewModel() {
         } else {
             setGstDataLiveData.postValue(generateGstListString(currentGstData))
         }
-        setNotesRecyclerViewContentLiveData.postValue(notes)
+        updateListLiveData.postValue(Event(notes))
     }
 
     private fun loadGstData() {
@@ -71,7 +70,7 @@ class WeatherViewModel : ViewModel() {
         val newNotes = notes.toMutableList()
         val noteIndex = notes.indexOf(note)
         newNotes[noteIndex] = note.copy().apply { content += "🥸" }
-        updateListWithDiffUtilLiveData.postValue(Event(newNotes))
+        updateListLiveData.postValue(Event(newNotes))
         notes = newNotes
     }
 
@@ -97,7 +96,7 @@ class WeatherViewModel : ViewModel() {
     private fun updateAndSaveList(
         newNotes: List<Note>
     ) {
-        updateListWithDiffUtilLiveData.postValue(Event(newNotes))
+        updateListLiveData.postValue(Event(newNotes))
         notes = newNotes
     }
 }
