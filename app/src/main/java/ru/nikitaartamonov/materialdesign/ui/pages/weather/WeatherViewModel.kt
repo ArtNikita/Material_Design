@@ -29,7 +29,7 @@ class WeatherViewModel : ViewModel() {
         Note(Note.id++, "Note ${Note.id}")
     )
 
-    val setGstDataLiveData: LiveData<String> = MutableLiveData()
+    val setGstDataLiveData: LiveData<CharSequence> = MutableLiveData()
     val updateListLiveData: LiveData<Event<List<Note>>> = MutableLiveData()
 
     fun onViewCreated(application: Application) {
