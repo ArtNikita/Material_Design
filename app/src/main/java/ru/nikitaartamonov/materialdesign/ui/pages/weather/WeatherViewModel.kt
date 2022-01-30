@@ -1,8 +1,8 @@
 package ru.nikitaartamonov.materialdesign.ui.pages.weather
 
 import android.app.Application
-import android.os.Build
 import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.style.BulletSpan
 import androidx.core.text.toSpannable
 import androidx.lifecycle.LiveData
@@ -58,18 +58,15 @@ class WeatherViewModel : ViewModel() {
     }
 
     private fun generateGstListText(gstData: List<GstWrapper>): CharSequence {
-        val stringBuilder = StringBuilder()
+        val stringBuilder = SpannableStringBuilder()
         gstData.reversed().forEach { gstItem ->
-            stringBuilder.append(gstItem.startTime).append("\n")
+            val spannable = gstItem.startTime.toSpannable()
+            spannable.setSpan(
+                BulletSpan(4, R.attr.colorSecondary), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            stringBuilder.append(spannable).append("\n")
         }
-        val spannable = stringBuilder.toString().toSpannable()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            for (i in 0..stringBuilder.length step gstData[0].startTime.length + 1)
-                spannable.setSpan(
-                    BulletSpan(4, R.attr.colorSecondary), i, i, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-        }
-        return spannable
+        return stringBuilder
     }
 
     fun onNoteClick(note: Note) {
