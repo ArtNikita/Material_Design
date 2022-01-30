@@ -52,10 +52,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         viewModel.setGstDataLiveData.observe(viewLifecycleOwner) { gstList ->
             binding.gstListTextView.text = gstList
         }
-        viewModel.setNotesRecyclerViewContentLiveData.observe(viewLifecycleOwner) { notes ->
-            adapter.updateItems(notes)
-        }
-        viewModel.updateListWithDiffUtilLiveData.observe(viewLifecycleOwner) { event ->
+        viewModel.updateListLiveData.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let { newNotes ->
                 val oldNotes = adapter.requireNotes()
                 adapter.setList(newNotes)
