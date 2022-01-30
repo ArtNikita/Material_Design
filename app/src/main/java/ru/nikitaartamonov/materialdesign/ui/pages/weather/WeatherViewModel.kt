@@ -1,9 +1,14 @@
 package ru.nikitaartamonov.materialdesign.ui.pages.weather
 
 import android.app.Application
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.BulletSpan
+import androidx.core.text.toSpannable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.nikitaartamonov.materialdesign.R
 import ru.nikitaartamonov.materialdesign.app.App
 import ru.nikitaartamonov.materialdesign.data.retrofit.GstWrapper
 import ru.nikitaartamonov.materialdesign.domain.Event
@@ -24,7 +29,7 @@ class WeatherViewModel : ViewModel() {
         Note(Note.id++, "Note ${Note.id}")
     )
 
-    val setGstDataLiveData: LiveData<String> = MutableLiveData()
+    val setGstDataLiveData: LiveData<CharSequence> = MutableLiveData()
     val updateListLiveData: LiveData<Event<List<Note>>> = MutableLiveData()
 
     fun onViewCreated(application: Application) {
@@ -33,7 +38,7 @@ class WeatherViewModel : ViewModel() {
         if (currentGstData == null) {
             loadGstData()
         } else {
-            setGstDataLiveData.postValue(generateGstListString(currentGstData))
+            setGstDataLiveData.postValue(generateGstListText(currentGstData))
         }
         updateListLiveData.postValue(Event(notes))
     }
@@ -43,7 +48,7 @@ class WeatherViewModel : ViewModel() {
             when (state) {
                 is GstDataLoadingState.Success -> {
                     gstData = state.gstData
-                    setGstDataLiveData.postValue(generateGstListString(state.gstData))
+                    setGstDataLiveData.postValue(generateGstListText(state.gstData))
                 }
                 is GstDataLoadingState.Error -> {
                     //todo notify about loading error
@@ -52,18 +57,16 @@ class WeatherViewModel : ViewModel() {
         }
     }
 
-    private fun generateGstListString(gstData: List<GstWrapper>): String {
-        val stringBuilder = StringBuilder()
-        gstData.reversed().forEachIndexed { index, gstItem ->
-            stringBuilder
-                .append(index + 1)
-                .append(". ")
-                .append(gstItem.startTime)
-            if (index != gstData.size - 1) {
-                stringBuilder.append("\n")
-            }
+    private fun generateGstListText(gstData: List<GstWrapper>): CharSequence {
+        val stringBuilder = SpannableStringBuilder()
+        gstData.reversed().forEach { gstItem ->
+            val spannable = gstItem.startTime.toSpannable()
+            spannable.setSpan(
+                BulletSpan(4, R.attr.colorSecondary), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            stringBuilder.append(spannable).append("\n")
         }
-        return stringBuilder.toString()
+        return stringBuilder
     }
 
     fun onNoteClick(note: Note) {
